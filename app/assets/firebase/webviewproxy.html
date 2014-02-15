@@ -29,6 +29,12 @@
                             firebase.child('users').push({id:user.id,total_score:0});                        
                         }
                     });
+                    
+                    var user_games = new Firebase('https://trump.firebaseio.com/users/'+user.id+'/games/');
+                    user_games.on('value', function (gamedata) {
+                		Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val() });
+            		});
+
                 } else {
                     // user is logged out
                 }
@@ -77,7 +83,6 @@
             });
             			
             /* FIRE EVENTS */
-            
 			Ti.App.fireEvent('app:webviewproxyDidLoad');
 			
             /* UTILITIES */
