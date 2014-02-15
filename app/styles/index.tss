@@ -1,7 +1,7 @@
 ".container": {
 	backgroundColor:"white"
 },
-".web": {
+".content": {
 	top: Alloy.Globals.top
 },
 "Label": {
