@@ -3,28 +3,35 @@
 		<script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
 		<script src="https://cdn.firebase.com/js/simple-login/1.2.5/firebase-simple-login.js"></script>
 		<script>
-		try {
-			var firebase = new Firebase("https://trump.firebaseio.com/");
-			var app_user;
+		try{
+		    
 		    var firebase = new Firebase("https://trump.firebaseio.com/");
             var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
-            	alert('we will try to auth from firebase now.');
-              if (error) {
-                // an error occurred while attempting login
-                alert(error);
-              } else if (user) {
-                // user authenticated with Firebase
-                app_user = user;
-                
-                var game_list = new Firebase('https://trump.firebaseio.com/users/' + app_user.id + '/games/');
-	            game_list.on('value', function (gamedata) {
-	                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val() });
-	            });
-
-                alert('Firebase User ID: ' + user.id + ', Provider: ' + user.provider);
-              } else {
-                alert('The user is logged out.')
-              }
+                if (error) {
+                    // an error occurred while attempting login
+                    alert(error);
+                } else if (user) {
+                    // user authenticated with Firebase
+                    alert('Firebase/Facebook User ID: ' + user.id + ', Provider: ' + user.provider);
+                    alert(firebase.child("users"));
+                    var firebase_users = new Firebase("https://trump.firebaseio.com/users");
+                    firebase_users.once("value",function(children){
+                        alert(children);
+                        children_arr = children.val();
+                        var child_exists = false;
+                        alert(children_arr);
+                        for(var key in children_arr)
+                        {
+                            if(children_arr[key].id == user.id) child_exists = true;
+                        }
+                        if(!child_exists)
+                        {
+                            firebase.child('users').push({id:user.id,total_score:0});                        
+                        }
+                    });
+                } else {
+                    // user is logged out
+                }
             });
             
             /* LISTEN FOR EVENTS */
@@ -34,6 +41,7 @@
                     access_token: e.access_token
                 });
             });
+            Ti.App.addEventListener("app:");
             
             Ti.App.addEventListener('app:createGame', function (event) {
 				var adjective_list = new Firebase('https://trump.firebaseio.com/adjective_list/');
