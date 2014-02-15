@@ -4,7 +4,7 @@
 			<View class="headerContent">
 				<Label class="white" id="title">Trump</Label>
 				<View class="addView">
-					<Label class="addViewLabel" onClick="newGame">+</Label>
+					<Label id="newGameButton" class="addViewLabel">+</Label>
 				</View>
 			</View>
 		</View>

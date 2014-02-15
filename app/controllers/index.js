@@ -4,6 +4,12 @@ function doClick(e) {
     
 $.index.open();
 
+// http://stackoverflow.com/a/15930390
+//$.index.addEventListener('android:back', function(e) {
+//    e.cancelBubble = true;
+//    Ti.App.fireEvent('android_back_button');
+//});
+
 var win = $.index;
 Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     // load the facebook module
@@ -73,10 +79,10 @@ else
     $.webviewproxy.url = "../../firebase/webviewproxy.html";
 }
 
-function newGame(e)
-{
-	Ti.API.info("****hi****");
-}
+$.newGameButton.addEventListener('click', function(e) {
+	Ti.API.info("Pressed button: new game.");
+	Alloy.createController('create').getView().open();
+});
 
 // Create a custom template that displays an image on the left, 
 // then a title next to it with a subtitle below it.
