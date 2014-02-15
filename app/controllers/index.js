@@ -5,12 +5,6 @@ function doClick(e) {
 $.index.open();
 
 var win = $.index;
-
-var navWin = Ti.UI.iOS.createNavigationWindow({
-    modal: true,
-	window: win
-});
-//navWin.open();
         
 Ti.App.addEventListener('app:gameListChanged', function(e) {
     var games = e.games;
