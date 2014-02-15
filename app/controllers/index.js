@@ -140,6 +140,7 @@ var listView = Ti.UI.createListView({
 });
 
 Ti.App.addEventListener('app:gameListChanged', function(e) {
+	Ti.API.info('gameListChanged');
 	var sections = [];
 	var games = e.games;
 	Ti.API.info('games:'+games);
