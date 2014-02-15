@@ -10,6 +10,12 @@
 	top: Alloy.Globals.top,
 	color: "white"
 },
+"#title": {
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
+},
 ".addView": {
 	top: 0,
 	right: 0,
@@ -22,7 +28,7 @@
 	top: 60
 },
 "TextField": {
-	width: Ti.UI.SIZE,
+	width: Ti.UI.FILL,
 	textAlign: "left",
 	color: "black",
 	borderColor: "#444",
@@ -35,11 +41,11 @@
 },
 ".submitContainer": {
 	bottom: 0,
-	width: Titanium.Platform.displayCaps.platformWidth,
+	width: Ti.UI.FILL,
 	height: 50
 }
 ".submit": {
-	width: Titanium.Platform.displayCaps.platformWidth,
+	width: Ti.UI.FILL,
 	height: 50,
 	lineHeight: 50,
 	backgroundColor: "#7C9A5B",
