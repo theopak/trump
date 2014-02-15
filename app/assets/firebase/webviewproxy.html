@@ -19,11 +19,13 @@
                         var child_exists = false;
                         for(var key in children_arr)
                         {
-                            if(children_arr[key].id == user.id) child_exists = true;
+                            if(children_arr[key] == user.id) child_exists = true;
                         }
                         if(!child_exists)
                         {
-                            firebase.child('users').push({id:user.id,total_score:0});                        
+                            var d = {};
+                            d = {id:user.id, total_score:0};
+                            firebase.child('users').child(user.id).set(d);                        
                         }
                     });
                 } else {
