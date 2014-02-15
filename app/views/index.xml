@@ -7,9 +7,9 @@
 						<ImageView image="trumpbutton.png"></ImageView>
 					</Label>
 				</View>
-				<Label class="white" id="title">Games</Label>
+				<Label class="white" id="title">Trump</Label>
 				<View class="addView">
-					<ImageView image="plusbutton.png" class="addViewLabel" id="newGameButton"></ImageView>
+					<ImageView image="../../new@2x.png" id="newGameButton"></ImageView>
 				</View>
 			</View>
 		</View>

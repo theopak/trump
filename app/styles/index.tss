@@ -10,10 +10,15 @@
 	top: Alloy.Globals.top,
 	color: "white"
 },
+"#newGameButton": {
+	width: "auto",
+	height: 70,
+	right: 0
+}
 ".addView": {
 	top: 0,
 	right: 0,
-	width: 50
+	width: 83
 },
 ".addViewLabel": {
 	font: { fontSize: 30 },
@@ -45,4 +50,8 @@
 		fontFamily: "Omnes-Regular",
 		fontSize: 26
 	}
-}
+},
+"Window": {
+ 	//"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
+     navBarHidden: true
+ }
