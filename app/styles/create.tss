@@ -22,7 +22,7 @@
 	top: 60
 },
 "TextField": {
-	width: Ti.UI.FULL,
+	width: Ti.UI.SIZE,
 	textAlign: "left",
 	color: "black",
 	borderColor: "#444",
@@ -33,9 +33,15 @@
 ".friends": {
 	top: 60
 },
-".submit": {
+".submitContainer": {
 	bottom: 0,
-	width: Ti.UI.FULL,
+	width: Titanium.Platform.displayCaps.platformWidth,
+	height: 50
+}
+".submit": {
+	width: Titanium.Platform.displayCaps.platformWidth,
+	height: 50,
+	lineHeight: 50,
 	backgroundColor: "#7C9A5B",
 	textAlign: "center",
 	color: "#FFFFFF"

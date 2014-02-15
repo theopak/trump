@@ -1,3 +1,4 @@
+/*
 // http://developer.appcelerator.com/question/93681/how-do-i-set-a-back-button-background-image-and-onclick-background-image#answer-168801
 var btnBack = new Ti.UI.createButton({
     backgroundImage:'back.png',
@@ -11,6 +12,7 @@ var win = new Ti.UI.createWindow({
 btnBack.addEventListener('click', function(){
     win.close();
 });
+*/
 
 $.submit.addEventListener("touchstart",  function(){$.submit.backgroundColor = "#9CC075";});
 //$.submit.addEventListener("touchend",    function(){$.submit.backgroundColor = "#7C9A5B";});
@@ -21,3 +23,6 @@ $.submit.addEventListener("touchend", function(e){
 	$.submit.backgroundColor = "#7C9A5B";
 	Ti.App.fireEvent('app:createGame', {friends: $.friends.value.split(',')});
 });
+
+// if this occurs too early then the text area is not fully built yet and therefore unfocusable.
+$.friends.focus();
