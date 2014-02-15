@@ -40,3 +40,7 @@
 "ListItem": {
 	height: 200
 }
+"Window": {
+	"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
+    navBarHidden: true
+}
