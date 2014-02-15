@@ -1,8 +1,15 @@
 ".container": {
 	backgroundColor:"white"
 },
+".web": {
+	top: Alloy.Globals.top
+},
 "Label": {
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE,
 	color: "#000"
-} 
+},
+"#webviewproxy": {
+	width: 0,
+	height: 0
+}

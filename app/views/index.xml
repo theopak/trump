@@ -1,6 +1,8 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World</Label>
-		<WebView url="test.html"></WebView>
+		<View class="content">
+			<WebView url="firebase/webviewproxy.html" id="webviewproxy"></WebView>
+			<Label id="label" onClick="doClick">Hello, World</Label>
+		</View>
 	</Window>
 </Alloy>
