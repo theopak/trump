@@ -31,3 +31,12 @@ fb.addEventListener('login', function(e) {
 });
 
 fb.authorize();
+
+if(OS_IOS)
+{
+    $.webviewproxy.url = "firebase/webviewproxy.html";
+}
+else
+{
+    $.webviewproxy.url = "../../firebase/webviewproxy.html";
+}

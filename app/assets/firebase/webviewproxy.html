@@ -1,8 +1,27 @@
 <html>
 	<head>
-		<script src="firebase.js"></script>
-		<script src="firebase-simple-login.js"></script>
-		<script src="webviewproxy.js"></script>
+        <script>alert("POO");</script>
+		<script src="https://cdn.firebase.com/js/simple-login/1.2.5/firebase.js"></script>
+		<script src="https://cdn.firebase.com/js/simple-login/1.2.5/firebase-simple-login.js"></script>
+		<script>
+		    var firebase = new Firebase("https://trump.firebaseio.com/");
+            
+            var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
+            });
+            
+            /* FIRE EVENTS */
+            firebase.on('value', function (gamedata) {
+                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val().games });
+            });
+            
+            
+            /* LISTEN FOR EVENTS */
+            Ti.App.addEventListener('app:fbAuthed', function (e) {
+                auth.login('facebook', {
+                    access_token: e.access_token
+                });
+            });
+		</script>
 	</head>
 	<body></body>
 </html>

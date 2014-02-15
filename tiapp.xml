@@ -49,7 +49,7 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone">facebook</module>
+        <module platform="android">facebook</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

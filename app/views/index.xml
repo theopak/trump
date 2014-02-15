@@ -9,7 +9,7 @@
 			</View>
 		</View>
 		<View class="content">
-			<WebView url="firebase/webviewproxy.html" id="webviewproxy"></WebView>
+			<WebView id="webviewproxy"></WebView>
 			<ListView>
 				<ListSection id="gamesList">
 					<ListItem title="Test item"></ListItem>
