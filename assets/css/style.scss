@@ -1,0 +1,62 @@
+/**
+* style.scss
+* Theo Pak <mail@theopak.com>
+*/
+
+
+/* NORMALIZATION, ETC ===================================================== */
+@import "vars";
+@import "inuit.css/inuit";
+
+
+/* GLOBAL COMPONENTS ====================================================== */
+body {
+  line-height: 1.375em;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: #add1ed;  // LOL
+  text-shadow: none;
+  color: $brand-color;
+}
+a {
+  cursor: pointer;
+  color: $active-color;
+  text-decoration: none;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+pre, code {
+  font-family: $code-face;
+}
+.disable-hover, .disable-hover * {
+  // Improves scroll performance (especially on mobile).
+  // Refer to <thecssninja.com/javascript/pointer-events-60fps>
+  pointer-events: none !important;
+}
+
+
+html {
+  background: #CCC url(../images/tumblr_mx1okjY0xV1sfie3io1_1280.jpg) no-repeat center fixed;
+  background-size: cover;
+}
+body {
+  padding: 3em 1em;
+}
+h1 {
+  font-weight: 100;
+}
+.iphone {
+  position: relative;
+  background: url(../images/goldteehan.png) no-repeat center top;
+  padding: 237px 63px;
+  width: 640px + 2*65px;
+  height: 1136px + 2*237px;
+  overflow: hidden;
+  .gw {
+    background: #2A2A2B;
+    height: 100%;
+  }
+}
