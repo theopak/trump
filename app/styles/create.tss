@@ -12,7 +12,7 @@
 },
 "#title": {
 	font: {
-		fontFamily: "Omnes-Regular",
+		fontFamily: "Omnes-Extrabold",
 		fontSize: 26
 	}
 },

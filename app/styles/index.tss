@@ -20,15 +20,15 @@
 	right: 0,
 	width: 83
 },
-".addViewLabel": {
-	font: { fontSize: 30 },
-	color: "white"
-},
 ".white": {
 	color: "white"
 },
 ".content": {
-	top: 70
+	top: 70,
+	backgroundColor: "#F0F0F0"
+},
+".content ListView": {
+	backgroundColor: "white"
 },
 "Label": {
 	width: Ti.UI.SIZE,
@@ -47,7 +47,7 @@
 },
 "#title": {
 	font: {
-		fontFamily: "Omnes-Regular",
+		fontFamily: "Omnes-Extrabold",
 		fontSize: 26
 	}
 },
