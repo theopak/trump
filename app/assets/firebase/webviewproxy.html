@@ -8,13 +8,15 @@
 			var app_user;
 		    var firebase = new Firebase("https://trump.firebaseio.com/");
             var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
+            	alert('we will try to auth from firebase now.');
               if (error) {
                 // an error occurred while attempting login
                 alert(error);
               } else if (user) {
                 // user authenticated with Firebase
                 app_user = user;
-                var game_list = new Firebase('https://trump.firebaseio.com/users/' + app_user + '/games/');
+                
+                var game_list = new Firebase('https://trump.firebaseio.com/users/' + app_user.id + '/games/');
 	            game_list.on('value', function (gamedata) {
 	                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val() });
 	            });
@@ -27,6 +29,7 @@
             
             /* LISTEN FOR EVENTS */
             Ti.App.addEventListener('app:fbAuthed', function (e) {
+            	Ti.API.info(e.access_token);
                 auth.login('facebook', {
                     access_token: e.access_token
                 });
