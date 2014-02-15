@@ -4,10 +4,11 @@
 ".header": {
 	top: 0,
 	height: 60,
-	backgroundColor: "#FFC"
+	backgroundColor: "#D56D79"
 },
 ".headerContent": {
-	top: Alloy.Globals.top
+	top: Alloy.Globals.top,
+	color: "white"
 },
 ".addView": {
 	top: 0,
@@ -15,7 +16,11 @@
 	width: 50
 },
 ".addViewLabel": {
-	font: { fontSize: 30 }
+	font: { fontSize: 30 },
+	color: "white"
+},
+".white": {
+	color: "white"
 },
 ".content": {
 	top: 60
@@ -28,4 +33,14 @@
 "#webviewproxy": {
 	width: 0,
 	height: 0
+},
+"ListView": {
+	separatorStyle: 0
+},
+"ListItem": {
+	height: 200
+}
+"Window": {
+	"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
+    navBarHidden: true
 }

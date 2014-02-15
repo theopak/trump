@@ -5,7 +5,6 @@
 		<script>
 		try{
 		    var firebase = new Firebase("https://trump.firebaseio.com/");
-		    firebase.unauth();
             var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
               if (error) {
                 // an error occurred while attempting login
