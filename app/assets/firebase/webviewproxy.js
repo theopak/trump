@@ -5,7 +5,7 @@ var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
 });
 
 /* FIRE EVENTS */
-something.on('value', function (gamedata) {
+firebase.on('value', function (gamedata) {
 	Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val().games });
 });
 
