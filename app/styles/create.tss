@@ -22,18 +22,27 @@
 	top: 60
 },
 "TextField": {
+	width: Ti.UI.FULL,
+	textAlign: "left",
 	color: "black",
-	width: Ti.UI.SIZE
+	borderColor: "#444",
+    borderRadius: 0,
+    borderWidth: 0,
+    borderBottom: 0
 }
-".expiration": {
+".friends": {
 	top: 60
 },
-".friends": {
-	top: 100
+".submit": {
+	bottom: 0,
+	width: Ti.UI.FULL,
+	backgroundColor: "#7C9A5B",
+	textAlign: "center",
+	color: "#FFFFFF"
 }
 "Label": {
-	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE,
+	width: Ti.UI.FULL,
+	height: Ti.UI.FULL,
 	color: "#000"
 },
 "#webviewproxy": {
