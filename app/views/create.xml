@@ -8,7 +8,9 @@
 		<View id="main" class="create">
 			<WebView id="webviewproxy"></WebView>
 			<TextField class="friends" id="friends" hintText="Enter csv uids of friends" />
-			<Button id="submit" class="submit" title="Start Game →" />
+			<View class= "submitContainer">
+				<Button id="submit" class="submit" title="Start Game →" />
+			</View>
 		</View>
 	</Window>
 </Alloy>
