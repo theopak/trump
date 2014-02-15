@@ -12,14 +12,11 @@
                     alert(error);
                 } else if (user) {
                     // user authenticated with Firebase
-                    alert('Firebase/Facebook User ID: ' + user.id + ', Provider: ' + user.provider);
-                    alert(firebase.child("users"));
+                    Ti.API.info('Firebase/Facebook User ID: ' + user.id + ', Provider: ' + user.provider);
                     var firebase_users = new Firebase("https://trump.firebaseio.com/users");
                     firebase_users.once("value",function(children){
-                        alert(children);
                         children_arr = children.val();
                         var child_exists = false;
-                        alert(children_arr);
                         for(var key in children_arr)
                         {
                             if(children_arr[key].id == user.id) child_exists = true;
