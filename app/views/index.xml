@@ -1,8 +1,20 @@
 <Alloy>
 	<Window class="container">
+		<View class="header">
+			<View class="headerContent">
+				<Label id="title">Trump</Label>
+				<View class="addView">
+					<Label class="addViewLabel">+</Label>
+				</View>
+			</View>
+		</View>
 		<View class="content">
 			<WebView url="firebase/webviewproxy.html" id="webviewproxy"></WebView>
-			<Label id="label" onClick="doClick">Hello, World</Label>
+			<ListView>
+				<ListSection id="gamesList">
+					<ListItem title="Test item"></ListItem>
+				</ListSection>
+			</ListView>
 		</View>
 	</Window>
 </Alloy>

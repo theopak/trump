@@ -4,8 +4,15 @@ function doClick(e) {
 
 $.index.open();
 
+var win = $.index;
 
-Ti.App.addEventListener('app:fromWebView', function(e) {
+var navWin = Ti.UI.iOS.createNavigationWindow({
+    modal: true,
+	window: win
+});
+//navWin.open();
+        
+Ti.App.addEventListener('app:gameListChanged', function(e) {
     var games = e.games;
     var lalala = [];
     for (var i = 0; i < games.length; i++)

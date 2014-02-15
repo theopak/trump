@@ -18,7 +18,6 @@ if (OS_IOS || OS_ANDROID) {
 		// check for iOS7
 		if (OS_IOS && parseInt(Titanium.Platform.version.split(".")[0], 10) >= 7) {
 			Alloy.Globals.top = '20dp';
-			Alloy.Globals.tableTop = '70dp';
 		}
 	} catch(e) {
 		// catch and ignore

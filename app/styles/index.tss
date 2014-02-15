@@ -1,8 +1,24 @@
 ".container": {
 	backgroundColor:"white"
 },
-".content": {
+".header": {
+	top: 0,
+	height: 60,
+	backgroundColor: "#FFC"
+},
+".headerContent": {
 	top: Alloy.Globals.top
+},
+".addView": {
+	top: 0,
+	right: 0,
+	width: 50
+},
+".addViewLabel": {
+	font: { fontSize: 30 }
+},
+".content": {
+	top: 60
 },
 "Label": {
 	width: Ti.UI.SIZE,
