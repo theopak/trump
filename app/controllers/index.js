@@ -6,16 +6,6 @@ $.index.open();
 
 var win = $.index;
         
-Ti.App.addEventListener('app:gameListChanged', function(e) {
-    var games = e.games;
-    var lalala = [];
-    for (var i = 0; i < games.length; i++)
-    {
-	    lalala.push({properties: { title: games[i]}});
-    }
-    //$.gamesList.setItems(lalala);
-});
-
 var fb = require('facebook');
 fb.appid = 259836610857049;
 fb.permissions = ['email', 'user_likes'];
@@ -90,10 +80,8 @@ var myTemplate = {
         	type: 'Ti.UI.ImageView',
         	bindId: 'arrow',
         	properties: {
-        		image: 'arrow.png',
-        		right: 10,
-        		width: 40,
-        		height: 70
+        		image: 'line.png',
+        		right: 10
         	}
         }
     ]
@@ -106,23 +94,26 @@ var listView = Ti.UI.createListView({
     // for all items as long as the template property is not defined for an item.
     defaultItemTemplate: 'template'
 });
-var sections = [];
 
-var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
-var gameDataSet = [
-    // the text property of info maps to the text property of the title label
-    // the text property of es_info maps to text property of the subtitle label
-    // the image property of pic maps to the image property of the image view
-    { info: {text: 'Boring'}, es_info: {text: 'Trevor, Dan, Theo'}, pic: {image: 'apple.jpg'}, properties: {height: 80}},
-    { info: {text: 'Exciting'}, es_info: {text: 'Derek, Trevor, Dan'}, pic: {image: 'banana.jpg'}, properties: {height: 80}}
-];
-gamesList.setItems(gameDataSet);
-sections.push(gamesList);
+Ti.App.addEventListener('app:gameListChanged', function(e) {
+	var sections = [];
+	var games = e.games;
+	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
+	var gameDataSet = [];
+    // for (var i = 0; i < games.length; i++)
+    // {
+	    // //gameDataSet.push({ info: {text: games[i].adjective}, participants: {text: games[i].participants.join(', ')}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+    // }
+    gamesList.setItems(gameDataSet);
+	
+	sections.push(gamesList);
+	
+	listView.setSections(sections);
+	listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+	
+	$.main.add(listView);
+});
 
-
-
-listView.setSections(sections);
-listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
-
-
-$.main.add(listView);
+Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
+	Ti.App.fireEvent('app:createGame', {friends: []});
+});
