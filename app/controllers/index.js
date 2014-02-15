@@ -151,7 +151,9 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	sections.push(gamesList);
 	
 	listView.setSections(sections);
-	listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+	if(OS_IOS) {
+	    listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+	}
 	
 	$.main.add(listView);
 });

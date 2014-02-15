@@ -49,6 +49,7 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
+        <module platform="android">facebook</module>
         <module platform="iphone">facebook</module>
     </modules>
     <deployment-targets>
