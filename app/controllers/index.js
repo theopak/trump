@@ -1,11 +1,14 @@
-function doClick(e) {
-        alert($.label.text);
-}
-    
 $.index.open();
 
+// http://stackoverflow.com/a/15930390
+//$.index.addEventListener('android:back', function(e) {
+//    e.cancelBubble = true;
+//    Ti.App.fireEvent('android_back_button');
+//});
+
 var win = $.index;
-Ti.App.addEventListener('app:proxyViewLoaded',function(){
+
+Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     // load the facebook module
     var fb = require('facebook');
     fb.appid = 259836610857049;
@@ -82,10 +85,10 @@ else
     $.webviewproxy.url = "../../firebase/webviewproxy.html";
 }
 
-function newGame(e)
-{
-	Ti.API.info("****hi****");
-}
+$.newGameButton.addEventListener('click', function(e) {
+	Ti.API.info("Pressed button: new game.");
+	Alloy.createController('create').getView().open();
+});
 
 // Create a custom template that displays an image on the left, 
 // then a title next to it with a subtitle below it.
@@ -102,7 +105,7 @@ var myTemplate = {
         },
         {                            // Title 
             type: 'Ti.UI.Label',     // Use a label for the title 
-            bindId: 'info',          // Maps to a custom info property of the item data
+            bindId: 'topic',          // Maps to a custom info property of the item data
             properties: {            // Sets the label properties
                 color: 'black',
                 font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
@@ -111,7 +114,7 @@ var myTemplate = {
         },
         {                            // Subtitle
             type: 'Ti.UI.Label',     // Use a label for the subtitle
-            bindId: 'es_info',       // Maps to a custom es_info property of the item data
+            bindId: 'friends',       // Maps to a custom es_info property of the item data
             properties: {            // Sets the label properties
                 color: 'gray',
                 font: { fontFamily:'Arial', fontSize: '14dp' },
@@ -131,10 +134,8 @@ var myTemplate = {
         	type: 'Ti.UI.ImageView',
         	bindId: 'arrow',
         	properties: {
-        		image: 'arrow.png',
-        		right: 10,
-        		width: 40,
-        		height: 70
+        		image: 'line.png',
+        		right: 10
         	}
         }
     ]
@@ -147,24 +148,43 @@ var listView = Ti.UI.createListView({
     // for all items as long as the template property is not defined for an item.
     defaultItemTemplate: 'template'
 });
-var sections = [];
 
-var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
-var gameDataSet = [
-    // the text property of info maps to the text property of the title label
-    // the text property of es_info maps to text property of the subtitle label
-    // the image property of pic maps to the image property of the image view
-    { info: {text: 'Boring'}, es_info: {text: 'Trevor, Dan, Theo'}, pic: {image: 'apple.jpg'}, properties: {height: 80}},
-    { info: {text: 'Exciting'}, es_info: {text: 'Derek, Trevor, Dan'}, pic: {image: 'banana.jpg'}, properties: {height: 80}}
-];
-gamesList.setItems(gameDataSet);
-sections.push(gamesList);
+Ti.App.addEventListener('app:gameListChanged', function(e) {
+	Ti.API.info('gameListChanged');
+	var sections = [];
+	var games = e.games;
+	Ti.API.info('games:'+games);
+	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
+	var gameDataSet = [];
+    for (var i = 0; i < games.length; i++)
+    {
+	    gameDataSet.push({ info: {text: games[i].adjective}, participants: {text: games[i].participants.join(', ')}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+    }
+    gamesList.setItems(gameDataSet);
+	
+	sections.push(gamesList);
+	
+	listView.setSections(sections);
 
+	if(OS_IOS) {
+	    listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+	}
+	
+	$.main.add(listView);
+});
 
+Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
+	// Ti.App.fireEvent('app:createGame', {friends: [0]});
+});
 
-listView.setSections(sections);
 if(OS_IOS)
 {
-    listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+    listView.separatorStyle = 0;
 }
 $.main.add(listView);
+
+// newview = Alloy.createController("create").getView();
+// 
+// var animation = require('alloy/animation');
+// animation.slideLeft($.index, newview, 500, function (event) {});
+

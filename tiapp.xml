@@ -9,7 +9,7 @@
     <copyright>2014 by Derek</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
-    <navbar-hidden>false</navbar-hidden>
+    <navbar-hidden>true</navbar-hidden>
     <analytics>true</analytics>
     <guid>07a07614-c5f0-4948-b3ad-46b0ed7278cc</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
@@ -50,7 +50,7 @@
     </mobileweb>
     <modules>
         <module platform="android">facebook</module>
-        <module platform="ios">facebook</module>
+        <module platform="iphone">facebook</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
