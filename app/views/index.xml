@@ -2,19 +2,19 @@
 	<Window class="container">
 		<View class="header">
 			<View class="headerContent">
-				<Label id="title">Trump</Label>
+				<Label class="white" id="title">Trump</Label>
 				<View class="addView">
-					<Label class="addViewLabel">+</Label>
+					<Label class="addViewLabel" onClick="newGame">+</Label>
 				</View>
 			</View>
 		</View>
-		<View class="content">
+		<View id="main" class="content">
 			<WebView id="webviewproxy"></WebView>
-			<ListView>
+			<!--<ListView>
 				<ListSection id="gamesList">
 					<ListItem title="Test item"></ListItem>
 				</ListSection>
-			</ListView>
+			</ListView> -->
 		</View>
 	</Window>
 </Alloy>
