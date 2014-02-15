@@ -35,7 +35,12 @@
             });
             
             /* LISTEN FOR EVENTS */
+           var already_fbAuthed = false;
             Ti.App.addEventListener('app:fbAuthed', function (e) {
+                if(already_fbAuthed){
+                    return;
+                }
+                already_fbAuthed = true;
             	Ti.API.info(e.access_token);
                 auth.login('facebook', {
                     access_token: e.access_token
