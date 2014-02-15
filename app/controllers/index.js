@@ -87,7 +87,10 @@ else
 
 $.newGameButton.addEventListener('click', function(e) {
 	Ti.API.info("Pressed button: new game.");
-	Alloy.createController('create').getView().open();
+	if(!Titanium.Network.online)
+		alert("Network connection required.");
+	else
+		Alloy.createController('create').getView().open();
 });
 
 // Create a custom template that displays an image on the left, 
