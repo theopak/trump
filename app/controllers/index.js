@@ -6,15 +6,6 @@ $.index.open();
 
 var win = $.index;
 Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
-    // this code will execute when the invisible web frame has loaded
-    Ti.App.addEventListener('app:gameListChanged', function(e) {
-        var games = e.games;
-        var lalala = [];
-        for (var i = 0; i < games.length; i++)
-        {
-    	    lalala.push({properties: { title: games[i]}});
-        }
-    });
     // load the facebook module
     var fb = require('facebook');
     fb.appid = 259836610857049;
@@ -169,8 +160,6 @@ Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
 	Ti.App.fireEvent('app:createGame', {friends: []});
 });
 
-
-listView.setSections(sections);
 if(OS_IOS)
 {
     listView.separatorStyle = 0;

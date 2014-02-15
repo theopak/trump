@@ -31,11 +31,28 @@
 				var adjective_list = new Firebase('https://trump.firebaseio.com/adjective_list/');
 				adjective_list.on('value', function (adjectives) {
 					adjectives = adjectives.val();
-					selection = adjectives[randInt(0, adjectives.length)];
+					adjective_id = randInt(0, adjectives.length);
+					selection = adjectives[adjective_id];
 					Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
+					
+					var games = new Firebase('https://trump.firebaseio.com/games/');
+					Ti.API.info(event.friends);
+					
+					var newPushRef = games.push();
+					newPushRef.set({
+						adjective: adjective_id,
+						participants: event.friends
+					});
+					var pushedName = newPushRef.name();
+					var friends = event.friends;
+					
+					for (var i = 0; i < friends.length; i++)
+					{
+						friend_games = new Firebase('https://trump.firebaseio.com/users/'+friends[i]+'/games/');
+						friend_games.push(pushedName);
+					}
+
 				});
-				
-				var user = new Firebase('https://trump.firebaseio.com/users/' + app_user.id); 
             });
             			
             /* FIRE EVENTS */
