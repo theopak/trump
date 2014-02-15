@@ -35,7 +35,12 @@
             });
             
             /* LISTEN FOR EVENTS */
+           var already_fbAuthed = false;
             Ti.App.addEventListener('app:fbAuthed', function (e) {
+                if(already_fbAuthed){
+                    return;
+                }
+                already_fbAuthed = true;
             	Ti.API.info(e.access_token);
                 auth.login('facebook', {
                     access_token: e.access_token
@@ -44,7 +49,7 @@
             Ti.App.addEventListener("app:");
             
             Ti.App.addEventListener('app:createGame', function (event) {
-				var adjective_list = new Firebase('https://trump.firebaseio.com/adjective_list/');
+				var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
 				adjective_list.on('value', function (adjectives) {
 					adjectives = adjectives.val();
 					adjective_id = randInt(0, adjectives.length);
