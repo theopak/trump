@@ -24,5 +24,21 @@ $.submit.addEventListener("touchend", function(e){
 	Ti.App.fireEvent('app:createGame', {friends: $.friends.value.split(',')});
 });
 
+
+var row = Titanium.UI.createTableViewRow({
+    height: 'auto',
+    hasChild: true,
+    name: name, // this one
+    pic: pic
+});
+var tableview = Titanium.UI.createTableView({
+    data: data,
+    filterAttribute: 'name',
+    minRowHeight: 60,
+    search: searchBar,
+    searchHidden: true
+});
+
+
 // if this occurs too early then the text area is not fully built yet and therefore unfocusable.
 $.friends.focus();
