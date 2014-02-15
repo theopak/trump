@@ -3,7 +3,7 @@
 },
 ".header": {
 	top: 0,
-	height: 60,
+	height: 70,
 	backgroundColor: "#D56D79"
 },
 ".headerContent": {
@@ -23,7 +23,7 @@
 	color: "white"
 },
 ".content": {
-	top: 60
+	top: 70
 },
 "Label": {
 	width: Ti.UI.SIZE,
@@ -39,8 +39,10 @@
 },
 "ListItem": {
 	height: 200
-}
-"Window": {
-	"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
-    navBarHidden: true
+},
+"#title": {
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
 }
