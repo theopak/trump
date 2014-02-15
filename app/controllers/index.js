@@ -1,7 +1,3 @@
-function doClick(e) {
-        alert($.label.text);
-}
-    
 $.index.open();
 
 var win = $.index;
@@ -142,22 +138,22 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	var games = e.games;
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
-    // for (var i = 0; i < games.length; i++)
-    // {
-	    // //gameDataSet.push({ info: {text: games[i].adjective}, participants: {text: games[i].participants.join(', ')}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
-    // }
+    for (var i = 0; i < games.length; i++)
+    {
+	    gameDataSet.push({ info: {text: games[i].adjective}, participants: {text: games[i].participants.join(', ')}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+    }
     gamesList.setItems(gameDataSet);
 	
 	sections.push(gamesList);
 	
 	listView.setSections(sections);
-	listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+	listView.separatorStyle = 0;
 	
 	$.main.add(listView);
 });
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
-	Ti.App.fireEvent('app:createGame', {friends: []});
+	Ti.App.fireEvent('app:createGame', {friends: [0]});
 });
 
 if(OS_IOS)
@@ -165,3 +161,9 @@ if(OS_IOS)
     listView.separatorStyle = 0;
 }
 $.main.add(listView);
+
+// newview = Alloy.createController("create").getView();
+// 
+// var animation = require('alloy/animation');
+// animation.slideLeft($.index, newview, 500, function (event) {});
+
