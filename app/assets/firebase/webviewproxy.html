@@ -1,36 +1,39 @@
 <html>
 	<head>
-        <script>alert("POO");</script>
 		<script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
 		<script src="https://cdn.firebase.com/js/simple-login/1.2.5/firebase-simple-login.js"></script>
 		<script>
+		try{
 		    var firebase = new Firebase("https://trump.firebaseio.com/");
-            alert("poo");
+		    firebase.unauth();
             var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
               if (error) {
                 // an error occurred while attempting login
                 alert(error);
               } else if (user) {
                 // user authenticated with Firebase
-                alert('User ID: ' + user.id + ', Provider: ' + user.provider);
+                alert('Firebase User ID: ' + user.id + ', Provider: ' + user.provider);
               } else {
                 // user is logged out
               }
             });
-            alert("MMMM");
-            
-            /* FIRE EVENTS */
-            firebase.on('value', function (gamedata) {
-                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val().games });
-            });
-            
-            
             /* LISTEN FOR EVENTS */
             Ti.App.addEventListener('app:fbAuthed', function (e) {
                 auth.login('facebook', {
                     access_token: e.access_token
                 });
             });
+            
+            /* FIRE EVENTS */
+            firebase.on('value', function (gamedata) {
+                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val().games });
+            });
+            Ti.App.fireEvent('app:proxyViewLoaded');
+        }
+        catch(e)
+        {
+            alert(e);
+        }
 		</script>
 	</head>
 	<body></body>
