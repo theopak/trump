@@ -3,26 +3,22 @@
 		<script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
 		<script src="https://cdn.firebase.com/js/simple-login/1.2.5/firebase-simple-login.js"></script>
 		<script>
+		try {
 			var firebase = new Firebase("https://trump.firebaseio.com/");
 			var app_user;
+		    var firebase = new Firebase("https://trump.firebaseio.com/");
             var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
               if (error) {
                 // an error occurred while attempting login
                 alert(error);
               } else if (user) {
                 // user authenticated with Firebase
-                alert('User ID: ' + user.id + ', Provider: ' + user.provider);
                 app_user = user;
+                alert('Firebase User ID: ' + user.id + ', Provider: ' + user.provider);
               } else {
                 // user is logged out
               }
             });
-            
-            /* FIRE EVENTS */
-            firebase.on('value', function (gamedata) {
-                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val().games });
-            });
-            
             
             /* LISTEN FOR EVENTS */
             Ti.App.addEventListener('app:fbAuthed', function (e) {
@@ -41,13 +37,23 @@
 				
 				var user = new Firebase('https://trump.firebaseio.com/users/' + app_user.id); 
             });
+            			
+            /* FIRE EVENTS */
+            firebase.on('value', function (gamedata) {
+                Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val().games });
+            });
             
+			Ti.App.fireEvent('app:webviewproxyDidLoad');
+			
             /* UTILITIES */
 			function randInt(min, max) {
 				return Math.floor(Math.random() * (max - min + 1) + min);
 			}
 			
-			Ti.App.fireEvent('app:webviewproxyDidLoad');
+        }
+        catch(e) {
+            alert(e);
+        }
 		</script>
 	</head>
 	<body></body>

@@ -1,27 +1,78 @@
 function doClick(e) {
-    alert($.label.text);
+        alert($.label.text);
 }
-
+    
 $.index.open();
 
 var win = $.index;
-        
-var fb = require('facebook');
-fb.appid = 259836610857049;
-fb.permissions = ['email', 'user_likes'];
- 
-fb.addEventListener('login', function(e) {
-    if (e.success) {
-    	Ti.App.fireEvent('app:fbAuthed', {access_token: fb.getAccessToken()});
-    } else if (e.error) {
-        alert(e.error);
-    } else if (e.cancelled) {
-	    alert("You don't want to give permission? :(");
-    }
+Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
+    // this code will execute when the invisible web frame has loaded
+    Ti.App.addEventListener('app:gameListChanged', function(e) {
+        var games = e.games;
+        var lalala = [];
+        for (var i = 0; i < games.length; i++)
+        {
+    	    lalala.push({properties: { title: games[i]}});
+        }
+    });
+    // load the facebook module
+    var fb = require('facebook');
+    fb.appid = 259836610857049;
+    fb.permissions = ['email', 'user_likes'];
+    
+    // check to see if our auth token is valid.  Seriously, this is the way to do it...
+    // https://developers.facebook.com/blog/post/2011/05/13/how-to--handle-expired-access-tokens/
+    fb.requestWithGraphPath("me",{access_token:fb.getAccessToken()},"GET",function(e)
+    {
+        if(e.success){
+            // our access token is still valid.  Phew...
+        }else{
+            // we need to re-authorize.  Darn
+            fb.logout();
+            fb.authorize();
+        }
+        // at this point we are guaranteed to be authenticated with facebook
+        fb.addEventListener('login', function(e) {
+            if (e.success) {
+                Ti.App.fireEvent('app:fbAuthed', {access_token: fb.getAccessToken()});
+            } else if (e.error) {
+                alert(e.error);
+            } else if (e.cancelled) {
+                var dialog = Ti.UI.createAlertDialog({
+                    message: 'Sorry, you must connect to facebook in order to play Trump',
+                    ok: 'Okay',
+                    title: 'Sign-in required'
+                    });
+                dialog.addEventListener("click",function(e){fb.authorize();});
+                dialog.show();
+            }
+        });
+        if (!fb.loggedIn) {
+            fb.authorize();
+        }
+        else
+        {
+            Ti.App.fireEvent("app:fbAuthed",{access_token:fb.accessToken});
+        }
+        Ti.App.addEventListener("app:playerWonRound",function(e)
+            {
+                // Now create the status message after you've confirmed that authorize() succeeded
+                fb.dialog('feed', {caption: "I just won a round of Trump with this card: ",link: e.winning_url}, 
+                  function(e) {
+                    if (e.success) {
+                        alert("Thank you for your support!");
+                    } else {
+                        if (e.error) {
+                            alert(e.error);
+                        } else {
+                            alert("Cancelled");
+                        }
+                    }
+                });    
+            });
+    });
+
 });
-
-fb.authorize();
-
 if(OS_IOS)
 {
     $.webviewproxy.url = "firebase/webviewproxy.html";
@@ -117,3 +168,11 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
 	Ti.App.fireEvent('app:createGame', {friends: []});
 });
+
+
+listView.setSections(sections);
+if(OS_IOS)
+{
+    listView.separatorStyle = 0;
+}
+$.main.add(listView);
