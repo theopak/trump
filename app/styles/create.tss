@@ -23,7 +23,7 @@
 },
 "TextField": {
 	color: "black",
-	width: Ti.UI.SIZE,
+	width: Ti.UI.SIZE
 }
 ".expiration": {
 	top: 60

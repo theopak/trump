@@ -7,8 +7,7 @@
 		</View>
 		<View id="main" class="create">
 			<WebView id="webviewproxy"></WebView>
-			<TextField class="expiration" hintText="Enter an expiration ISO 8601 datetime" />
-			<TextField class="friends" hintText="Enter csv uids of friends" />
+			<TextField class="friends" id="friends" hintText="Enter csv uids of friends" />
 			<Button id="submit" class="invite" title="Invite" />
 		</View>
 	</Window>
