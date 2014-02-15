@@ -1,0 +1,15 @@
+<Alloy>
+	<Window class="container">
+		<View class="header">
+			<View class="headerContent">
+				<Label class="white" id="title">New Game</Label>
+			</View>
+		</View>
+		<View id="main" class="create">
+			<WebView id="webviewproxy"></WebView>
+			<TextField class="expiration" hintText="Enter an expiration ISO 8601 datetime" />
+			<TextField class="friends" hintText="Enter csv uids of friends" />
+			<Button id="submit" class="invite" title="Invite" />
+		</View>
+	</Window>
+</Alloy>
