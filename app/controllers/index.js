@@ -1,5 +1,11 @@
 $.index.open();
 
+// http://stackoverflow.com/a/15930390
+//$.index.addEventListener('android:back', function(e) {
+//    e.cancelBubble = true;
+//    Ti.App.fireEvent('android_back_button');
+//});
+
 var win = $.index;
 Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     // load the facebook module
@@ -69,10 +75,10 @@ else
     $.webviewproxy.url = "../../firebase/webviewproxy.html";
 }
 
-function newGame(e)
-{
-	Ti.API.info("****hi****");
-}
+$.newGameButton.addEventListener('click', function(e) {
+	Ti.API.info("Pressed button: new game.");
+	Alloy.createController('create').getView().open();
+});
 
 // Create a custom template that displays an image on the left, 
 // then a title next to it with a subtitle below it.
@@ -89,7 +95,7 @@ var myTemplate = {
         },
         {                            // Title 
             type: 'Ti.UI.Label',     // Use a label for the title 
-            bindId: 'info',          // Maps to a custom info property of the item data
+            bindId: 'topic',          // Maps to a custom info property of the item data
             properties: {            // Sets the label properties
                 color: 'black',
                 font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
@@ -98,7 +104,7 @@ var myTemplate = {
         },
         {                            // Subtitle
             type: 'Ti.UI.Label',     // Use a label for the subtitle
-            bindId: 'es_info',       // Maps to a custom es_info property of the item data
+            bindId: 'friends',       // Maps to a custom es_info property of the item data
             properties: {            // Sets the label properties
                 color: 'gray',
                 font: { fontFamily:'Arial', fontSize: '14dp' },
@@ -136,6 +142,7 @@ var listView = Ti.UI.createListView({
 Ti.App.addEventListener('app:gameListChanged', function(e) {
 	var sections = [];
 	var games = e.games;
+	Ti.API.info('games:'+games);
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
     for (var i = 0; i < games.length; i++)
@@ -147,7 +154,10 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	sections.push(gamesList);
 	
 	listView.setSections(sections);
-	listView.separatorStyle = 0;
+
+	if(OS_IOS) {
+	    listView.separatorStyle = Titanium.UI.iPhone.ListViewSeparatorStyle.NONE;
+	}
 	
 	$.main.add(listView);
 });

@@ -9,7 +9,7 @@
 				</View>
 				<Label class="white" id="title">Games</Label>
 				<View class="addView">
-					<ImageView image="plusbutton.png"></ImageView>
+					<ImageView image="plusbutton.png" class="addViewLabel" id="newGameButton"></ImageView>
 				</View>
 			</View>
 		</View>
