@@ -63,13 +63,17 @@ Ti.App.addEventListener('app:play', function(game) {
 	});
 	Ti.App.fireEvent('app:requestGameInfo', {game: game.game});
 	} catch (e) {alert(e);}
-    function addPhoto(){
-        Alloy.Globals.game_id = game.game;
-        Alloy.createController('submit',{});
-    };
-    // Handle touch events etc.
-    $.backButton.addEventListener("touchend",function(e){$.play.close();});
-    $.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
-    $.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
-    $.submit.addEventListener("touchend",    function(e){addPhoto();});
+    Alloy.Globals.game_id = game.game;
+
 });
+
+
+function addPhoto(){
+    Alloy.createController('submit',{});
+};
+// Handle touch events etc.
+$.backButton.addEventListener("touchend",function(e){$.play.close();});
+$.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
+$.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
+$.submit.addEventListener("touchend",    function(e){addPhoto();});
+
