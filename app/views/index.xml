@@ -7,7 +7,7 @@
 						<ImageView image="trumpbutton.png"></ImageView>
 					</Label>
 				</View>
-				<Label class="white" id="title" onClick="openCamera">TRUMP</Label>
+				<Label class="white" id="title">TRUMP</Label>
 				<View class="addView">
 					<ImageView image="../../new@2x.png" id="newGameButton"></ImageView>
 				</View>
