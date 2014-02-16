@@ -116,7 +116,7 @@
                                                 all_data["judge"] = {id:judge_data.val().id,name:judge_data.val().name};
                                                 var num_submissions = 0;
                                                 if(submissions.val() != null){
-                                                    num_submissions = Object.keys(submissions.val());
+                                                    num_submissions = Object.keys(submissions.val()).length;
                                                 }
                                                 all_data["remaining"] = (Object.keys(participants.val()).length - num_submissions) - 1;
                                                 all_data["has_submitted"] = false;
