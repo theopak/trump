@@ -118,6 +118,7 @@
                                                 if(submissions.val() != null){
                                                     num_submissions = Object.keys(submissions.val()).length;
                                                 }
+                                                all_data["current_user_id"] = user.id;
                                                 all_data["remaining"] = (Object.keys(participants.val()).length - num_submissions) - 1;
                                                 all_data["has_submitted"] = false;
                                                 for(var key in submissions.val()){
@@ -141,7 +142,7 @@
                                 game.child("state").set("judged");
                             }catch(e){alert(e);}
                         });
-                        Ti.App.addEventListener('app:viewSubmissions',function(e){
+                        Ti.App.addEventListener('app:requestSubmissions',function(e){
                             try{
                                 var game_id = e.game;
                                 var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
@@ -164,6 +165,7 @@
                                                     }
                                                 }
                                                 final_data.push({id:players[i].id,name:players[i].name,url:url});
+                                                Ti.App.fireEvent("app:submissionsAcquired",final_data);
                                             }        
                                         });
                                     });  
