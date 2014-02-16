@@ -19,14 +19,26 @@
 	}
 },
 "#backButton": {
-	width: "auto",
-	height: 70,
+	width: 130,
+	height: 60,
 	left: 0
 },
+".backButtonImage": {
+	top: 10,
+	left: 0,
+	width: 20,
+	height: 40,
+}
 ".addView": {
 	top: 0,
-	left: 0,
-	width: 83,
+	left: 20,
+	width: "auto",
+	height: 60,
+	color: "White",
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
 },
 ".white": {
 	color: "white"

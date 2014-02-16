@@ -16,6 +16,7 @@ var emptyStateView = Ti.UI.createView({
 	right: 10,
    	height: 110,
 	backgroundColor: "white",
+	borderRadius: 4,
 });
 var emptyStateTitle = Ti.UI.createLabel({
 	text: "Trump is a game for friends.",
@@ -178,7 +179,7 @@ var myTemplate = {
             bindId: 'topic',          // Maps to a custom info property of the item data
             properties: {            // Sets the label properties
                 color: 'black',
-                font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
+                font: { fontFamily:'Proxima Nova', fontSize: '20dp', fontWeight:'bold' },
                 left: '70dp', top: 15,
             }
         },
@@ -187,7 +188,7 @@ var myTemplate = {
             bindId: 'friends',       // Maps to a custom es_info property of the item data
             properties: {            // Sets the label properties
                 color: 'gray',
-                font: { fontFamily:'Arial', fontSize: '14dp' },
+                font: { fontFamily:'Omnes', fontSize: '14dp' },
                 left: '70dp', top: '40dp',
             }
         },
@@ -242,7 +243,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
     for (var key in games)
     {
-	    gameDataSet.push({ topic: {text: games[key].adjective.adjective}, friends: {text: games[key].participants_text}, pic: {image: "http://graph.facebook.com/"+games[key].judge+"/picture?width=100&height=100"}, properties: {height: 80}});
+	    gameDataSet.push({ topic: {text: games[key].adjective.adjective.toUpperCase()}, friends: {text: games[key].participants_text}, pic: {image: "http://graph.facebook.com/"+games[key].judge+"/picture?width=100&height=100"}, properties: {height: 80}});
     }
     
     gamesList.setItems(gameDataSet);

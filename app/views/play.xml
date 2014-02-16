@@ -2,8 +2,9 @@
 	<Window class="container">
 		<View class="header">
 			<View class="headerContent">
-				<View class="addView">
-					<ImageView image="../../new@2x.png" id="backButton">Games</ImageView>
+				<View id="backButton">
+					<ImageView class="backButtonImage" image="../../back@2x.png"></ImageView>
+					<Label class="addView">Games</Label>
 				</View>
 				<Label class="white" id="title">Play</Label>
 			</View>
