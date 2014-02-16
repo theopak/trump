@@ -170,8 +170,7 @@ var myTemplate = {
             bindId: 'pic',           // Maps to a custom pic property of the item data
             properties: {            // Sets the image view  properties
                 width: '50dp', height: '50dp', left: 10,
-                borderRadius: '25dp', borderWidth: '1px',
-                borderColor: "#000"
+                borderRadius: '25dp'
             }
         },
         {                            // Title 
