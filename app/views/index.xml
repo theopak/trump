@@ -15,7 +15,7 @@
 		</View>
 		<View id="main" class="content">
 			<WebView id="webviewproxy"></WebView>
-			<View class="emptystate">
+			<View id="emptystate" class="emptystate">
 				<Label class="emptystateLabel">Trump is a game for friends.</Label>
 				<Label class="emptystateLabelLight">tap the add button to get started with your first round</Label>
 			</View>
