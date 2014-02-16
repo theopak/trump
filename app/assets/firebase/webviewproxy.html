@@ -106,18 +106,19 @@
                                 var judge = new Firebase("https://trump.firebaseio.com/users/"+game_data.val().judge+"/");
                                 var submissions = new Firebase("https://trump.firebaseio.com/games/"+game_data.name()+"/submissions/");
                                 var participants = new Firebase("https://trump.firebaseio.com/games/"+game_data.name()+"/participants/");
-                                Ti.API.info("PARTICIPANTS2" + participants.val());
-                                Ti.API.info("SUBMISSIONS2" + submissions.val());
                                 participants.once('value',function(participants){
                                     submissions.once('value',function(submissions){
-    
                                         judge.once("value",function(judge_data){
                                             var adjective = new Firebase("https://trump.firebaseio.com/adjectives/"+game_data.val().adjective+"/");
                                             adjective.once("value",function(adjective_data){
                                                 var all_data = {};
                                                 all_data["adjective"] = adjective_data.val().adjective;
                                                 all_data["judge"] = {id:judge_data.val().id,name:judge_data.val().name};
-                                                all_data["remaining"] = (Object.keys(participants.val()).length - Object.keys(submissions.val()).length) - 1;
+                                                var num_submissions = 0;
+                                                if(submissions.val() != null){
+                                                    num_submissions = Object.keys(submissions.val());
+                                                }
+                                                all_data["remaining"] = (Object.keys(participants.val()).length - num_submissions) - 1;
                                                 all_data["has_submitted"] = false;
                                                 for(var key in submissions.val()){
                                                     if(key == user.id){
