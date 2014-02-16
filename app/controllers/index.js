@@ -226,7 +226,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 		return;
 	} else {
 		// The empty state contains copy from the xml view.
-		$.emptystate.remove();
+		$.index.remove($.emptystate);
 	}
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
