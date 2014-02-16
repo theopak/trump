@@ -163,9 +163,17 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
-    for (var i = 0; (games) && (i < games.length); i++)
+	for(var key in games){
+	    games[key].participants_text = "";
+	    alert("games key is" + key);
+	    for(var i = 0; i < games[key].participants.length;i++){
+            games[key].participants_text += ", "+games[key].participants[i].name;	        
+	    }
+	    games[key].participants_text = games[key].participants_text.substring(2);
+	}
+    for (var key in games)
     {
-	    gameDataSet.push({ topic: {text: games[i].adjective}, friends: {text: games[i].participants}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+	    gameDataSet.push({ topic: {text: games[key].adjective.adjective}, friends: {text: games[key].participants_text}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
     }
     
     gamesList.setItems(gameDataSet);
