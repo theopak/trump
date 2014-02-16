@@ -137,14 +137,14 @@
                                 var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
                                 adjective_list.on('value', function (adjectives) {
                                     adjectives = adjectives.val();
-                                    adjective_id = randInt(0, adjectives.length);
+                                    adjective_id = randInt(0, adjectives.length-1);
                                     selection = adjectives[adjective_id];
                                     Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
                                     
                                     var games = new Firebase('https://trump.firebaseio.com/games/');
                                     Ti.API.info(event.friends);
                                     event.friends.push(user.id);
-                                    var judge_id = randInt(0,event.friends.length);
+                                    var judge_id = randInt(0,event.friends.length-1);
                                     var judge = event.friends[judge_id];
                                     var newPushRef = games.push();
                                     newPushRef.set({
