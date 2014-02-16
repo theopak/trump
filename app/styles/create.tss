@@ -15,7 +15,7 @@
 "#title": {
 	font: {
 		fontFamily: "Omnes-Regular",
-		fontSize: 26
+		fontSize: 20
 	}
 },
 ".addView": {
@@ -30,7 +30,7 @@
 	color: "white",
 	font: {
 		fontFamily: "Omnes-Regular",
-		fontSize: 26
+		fontSize: 20
 	}
 },
 ".white": {
