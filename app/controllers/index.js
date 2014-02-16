@@ -178,7 +178,7 @@ var myTemplate = {
             type: 'Ti.UI.Label',     // Use a label for the title 
             bindId: 'topic',          // Maps to a custom info property of the item data
             properties: {            // Sets the label properties
-                color: 'black',
+                color: '#575757',
                 font: { fontFamily:'Proxima Nova', fontSize: '20dp', fontWeight:'bold' },
                 left: '70dp', top: 15,
             }
@@ -187,7 +187,7 @@ var myTemplate = {
             type: 'Ti.UI.Label',     // Use a label for the subtitle
             bindId: 'friends',       // Maps to a custom es_info property of the item data
             properties: {            // Sets the label properties
-                color: '#333333',
+                color: '#575757',
                 font: { fontFamily:'Omnes', fontSize: '16dp' },
                 left: '70dp', top: '40dp',
             }
@@ -246,7 +246,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
     {
 	    gameDataSet.push({
 	    	topic: {
-	    		text: games[key].adjective.adjective,
+	    		text: games[key].adjective.adjective.toUpperCase(),
 	    		game_id: games[key].game_id
 	    	},
 	    	friends: {
