@@ -96,8 +96,8 @@ Ti.App.addEventListener('app:friendListAcquired', function(message) {
 		Ti.App.fireEvent('app:createGame', {
 			friends : checked_list
 		});
+		Alloy.createController('play', {game: 'test'}).getView().open();
 		$.win.close();
-		//Alloy.createController('play').getView().open();
 	};
 	$.backButton.addEventListener("touchend", function(e) {
 		$.win.close();

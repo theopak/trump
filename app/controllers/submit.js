@@ -12,11 +12,11 @@ Titanium.Media.showCamera({
 
 		xhr.onload = function(){
 		 	Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState + this.responseText);      
-		 	Ti.App.fireEvent('app:photoTaken', {photo_url: this.responseText});
+		 	Ti.App.fireEvent('app:photoTaken', {photo_url: this.responseText,game_id:Alloy.Globals.game_id});
 		};
 					         
 		xhr.onsendstream = function(e){
-		    Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
+		    //Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
 		};
 					                     
 		// open the client

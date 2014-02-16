@@ -178,7 +178,7 @@ var myTemplate = {
             type: 'Ti.UI.Label',     // Use a label for the title 
             bindId: 'topic',          // Maps to a custom info property of the item data
             properties: {            // Sets the label properties
-                color: 'black',
+                color: '#575757',
                 font: { fontFamily:'Proxima Nova', fontSize: '20dp', fontWeight:'bold' },
                 left: '70dp', top: 15,
             }
@@ -187,8 +187,8 @@ var myTemplate = {
             type: 'Ti.UI.Label',     // Use a label for the subtitle
             bindId: 'friends',       // Maps to a custom es_info property of the item data
             properties: {            // Sets the label properties
-                color: 'gray',
-                font: { fontFamily:'Omnes', fontSize: '14dp' },
+                color: '#575757',
+                font: { fontFamily:'Omnes', fontSize: '16dp' },
                 left: '70dp', top: '40dp',
             }
         },
@@ -206,7 +206,8 @@ var myTemplate = {
         	bindId: 'arrow',
         	properties: {
         		image: 'line.png',
-        		right: 10
+        		right: 10,
+        		height: 20
         	}
         }
     ],
@@ -245,7 +246,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
     {
 	    gameDataSet.push({
 	    	topic: {
-	    		text: games[key].adjective.adjective,
+	    		text: games[key].adjective.adjective.toUpperCase(),
 	    		game_id: games[key].game_id
 	    	},
 	    	friends: {
@@ -290,12 +291,21 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	function playMatch(e) {
 		Ti.API.info("playMatch() triggered: " + e);
     	var item = gamesList.getItemAt(e.itemIndex);
-    	//Ti.App.fireEvent('app:play', {game: e.source.game_id});
-    	//Alloy.createController('play', {game: e.source.game_id}).getView().open();
-    	var demoGame = [];
-    	demoGame.adjective = "Demonstable";
-    	demoGame.judge = {name: "Derek", id: 0};
-    	Alloy.createController('play', {game: demoGame}).getView().open();
+
+    	// //Ti.App.fireEvent('app:play', {game: e.source.game_id});
+    	// //Alloy.createController('play', {game: e.source.game_id}).getView().open();
+    	// var demoGame = [];
+    	// demoGame.adjective = "Demonstable";
+    	// demoGame.judge = {name: "Derek", id: 0};
+    	// Alloy.createController('play', {game: demoGame}).getView().open();
+
+    	Ti.API.info("KEYS ARE"+Object.keys(item));
+    	if(OS_ANDROID){
+    	    Ti.App.fireEvent('app:play', {game: item.pic.game_id});
+    	}else{
+            Ti.App.fireEvent('app:play', {game: e.source.game_id});    	    
+    	}
+
 	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
