@@ -64,12 +64,12 @@ Ti.App.addEventListener('app:play', function(game) {
 	});
 	Ti.App.fireEvent('app:requestGameInfo', {game: game.game});
 	} catch (e) {alert(e);}
-    
+    Alloy.Globals.game_id = game.game;
+
 });
 
 
 function addPhoto(){
-    Alloy.Globals.game_id = game.game;
     Alloy.createController('submit',{});
 };
 // Handle touch events etc.
