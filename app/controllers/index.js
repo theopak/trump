@@ -89,6 +89,18 @@ Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
             // });
         });
     });
+    
+    Ti.App.addEventListener("app:getFacebookFriends",function(mm){
+        var friends = [];
+        fb.requestWithGraphPath("me/friends",{access_token:fb.getAccessToken()},"GET",function(ret){
+            var result = JSON.parse(ret.result);
+            for(var i = 0; i < result.data.length; i++){
+                friends.push(result.data[i].id);
+            }
+            Ti.App.fireEvent("app:gotFacebookFriends",{friend_ids:friends});
+        });
+    });
+    
     Ti.App.addEventListener("app:playerWonRound",function(e){
         // Now create the status message after you've confirmed that authorize() succeeded
         fb.dialog('feed', {caption: "I just won a round of Trump with this card: ",link: e.winning_url}, 
