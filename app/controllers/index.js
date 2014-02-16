@@ -187,8 +187,8 @@ var myTemplate = {
             type: 'Ti.UI.Label',     // Use a label for the subtitle
             bindId: 'friends',       // Maps to a custom es_info property of the item data
             properties: {            // Sets the label properties
-                color: 'gray',
-                font: { fontFamily:'Omnes', fontSize: '14dp' },
+                color: '#333333',
+                font: { fontFamily:'Omnes', fontSize: '16dp' },
                 left: '70dp', top: '40dp',
             }
         },
