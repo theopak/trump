@@ -22,7 +22,7 @@ $.submit.addEventListener("touchcancel", function(){$.submit.backgroundColor = "
 // (?): http://developer.appcelerator.com/question/124202/how-to-add-a-text-and-a-checkbox-on-a-tableviewrow
 // My Data-array for Table-view
 var checkboxArray = [];
-var tableView;
+var checked = {};
 
 Ti.App.fireEvent('app:requestFriendList');
 
@@ -49,7 +49,7 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	    //borderRadius: 0,
 	    //borderWidth: 1
 	});
-	tableView = Ti.UI.createTableView({
+	var tableView = Ti.UI.createTableView({
 	    width: "100%",
 	    height: "100%",
 	    data: checkboxArray,
@@ -86,10 +86,11 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	// for (var i = 0; i < rows.length; ++i)
 	    // rows[i].hasCheck = false;*/
 	
-	var lastRowClicked;
+	//var lastRowClicked;
 	tableView.addEventListener('click', function(e){
 	    var row = e.row;
 	    row.hasCheck = !row.hasCheck;
+	    checked[row.uid] = row.hasCheck;
 	    if(row.hasCheck)
 	    	row.color = "black";
 	    else
@@ -101,13 +102,15 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	function submitGame(){
 		Ti.API.info("Pressed button: Invite.");
 		$.submit.backgroundColor = "#7C9A5B";
-		var checked = [];
-		for (var row in tableView.data) {
-			if (tableView.data[row].hasCheck) {
-				checked.push(tableView.data[row].uid);
+		var checked_list = [];
+		
+		for (var key in checked) {
+			if (checked[key]) {
+				checked_list.push(key);
 			}
 		}
-		Ti.App.fireEvent('app:createGame', {friends: checked});
+		
+		Ti.App.fireEvent('app:createGame', {friends: checked_list});
 		$.create.close();
 	};
 	$.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
@@ -118,6 +121,7 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	
 	
 	// Now that it's set up, focus on the search bar.
-	searchBar.focus();
+	// I don't think that it should auto focus for the demo because we don't have that many friends.
+	// searchBar.focus();
 
 });

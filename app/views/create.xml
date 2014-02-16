@@ -6,7 +6,7 @@
 			</View>
 		</View>
 		<View id="main" class="create">
-			<WebView id="webviewproxy"></WebView>
+			<!-- <WebView id="webviewproxy"></WebView> -->
 			<!--<TextField class="friends" id="friends" hintText="Enter csv uids of friends" />-->
 			<!--<TableView id="table">
 				<SearchBar id="friends" class="friends" showCancel="false" hintText="Enter csv uids of friends" />
