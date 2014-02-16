@@ -15,7 +15,7 @@
 },
 "#title": {
 	font: {
-		fontFamily: "Omnes-Extrabold",
+		fontFamily: "Omnes-Regular",
 		fontSize: 26
 	}
 },
@@ -71,15 +71,15 @@
 	height: Ti.UI.FULL,
 	color: "#000"
 },
-"#webviewproxy": {
-	width: 0,
-	height: 0
-},
 "ListView": {
 	separatorStyle: 0
 },
 "ListItem": {
 	height: 200
+},
+"#webviewproxy": {
+	width: 0,
+	height: 0
 },
 "Window": {
 	//"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",

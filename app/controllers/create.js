@@ -19,8 +19,8 @@ btnBack.addEventListener('click', function(){
 // (?): http://developer.appcelerator.com/question/124202/how-to-add-a-text-and-a-checkbox-on-a-tableviewrow
 // My Data-array for Table-view
 var checkboxArray = [  
-  { hasCheck: false, title: "Derek Schultz", leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg" },
-  { hasCheck: false, title: "Dan Bulger",    leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg" },
+  { hasCheck: false, title: "Derek Schultz", leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg", uid: 1 },
+  { hasCheck: false, title: "Dan Bulger",    leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg", uid: 2 }
 ];
 
 // Make a UI searchbar that filters the contents of a UI tableview.
@@ -32,7 +32,7 @@ var searchBar = Ti.UI.createSearchBar({
     //bottom: 50,
     minHeight: 35,
     barColor: 'white',
-    color: '#444',
+    color: 'black',
     //backgroundColor: "#fff",
     //tintColor: "black",
     //borderColor: "#444",
@@ -51,6 +51,7 @@ var tableView = Ti.UI.createTableView({
 		fontFamily: "Omnes-Regular",
 		fontSize: 20
 	},
+	backgroundColor: "#F0F0F0",
     //searchHidden: true,		  // Set to true to hide the search field.
     //separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
     //separatorColor: "#fff"
@@ -77,8 +78,12 @@ for(var i = 0; i < 25; i++) {
 
 var lastRowClicked;
 tableView.addEventListener('click', function(e){
-	var row = e.row;
-     row.hasCheck = !row.hasCheck;
+    var row = e.row;
+    row.hasCheck = !row.hasCheck;
+    if(row.hasCheck)
+    	row.color = "black";
+    else
+    	row.color = "#444";
 });
 
 
@@ -86,12 +91,14 @@ tableView.addEventListener('click', function(e){
 function submitGame(){
 	Ti.API.info("Pressed button: Invite.");
 	$.submit.backgroundColor = "#7C9A5B";
-	Ti.App.fireEvent('app:createGame', {friends: searchBar.value.split(',')});
+	var checked = "1,2";
+	Ti.App.fireEvent('app:createGame', {friends: checked});
 };
 $.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
 $.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
 $.submit.addEventListener("touchend",    function(e){submitGame();});
 searchBar.addEventListener("return",     function(e){submitGame();}); 
+searchBar.addEventListener("blur",       function(e){searchBar.value="";}); 
 
 
 // Now that it's set up, focus on the search bar.
