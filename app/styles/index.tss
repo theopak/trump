@@ -6,7 +6,7 @@
 },
 ".header": {
 	top: 0,
-	height: 70,
+	height: 60,
 	backgroundColor: "#D56D79"
 },
 ".headerContent": {
@@ -15,7 +15,7 @@
 },
 "#newGameButton": {
 	width: "auto",
-	height: 70,
+	height: 60,
 	right: 0
 },
 ".addView": {
@@ -27,7 +27,7 @@
 	color: "white"
 },
 ".content": {
-	top: 70,
+	top: 60,
 	backgroundColor: "#F0F0F0"
 },
 ".content ListView": {
@@ -54,38 +54,9 @@
 },
 "#title": {
 	font: {
-		fontFamily: "Omnes-Regular",
+		fontFamily: "ProximaNove-ExgtraBold",
 		fontSize: 26
 	}
-},
-".emptystate": {
-	top: 15,
-	left: 10,
-	right: 10,
-	width: "auto",
-	height: 110,
-	textAlign: "left",
-	backgroundColor: "white",
-},
-".emptystateLabel": {
-	top: 15,
-	left: 20,
-	right: 20,
-	textAlign: "left",
-	font: {
-		fontFamily: "Omnes-Regular",
-		fontSize: 20
-	},
-},
-".emptystateLabelLight": {
-	top: 45,
-	left: 20,
-	right: 20,
-	textAlign: "left",
-	font: {
-		fontFamily: "Omnes-ExtraLight",
-		fontSize: 20
-	},
 },
 "Window": {
  	//"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
