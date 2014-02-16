@@ -13,6 +13,7 @@ Ti.App.addEventListener('app:play', function(game) {
 			right: 10,
 		   	height: 110,
 			backgroundColor: "transparent",
+			game_id:game.game
 		});
 		var gameViewJudge = Ti.UI.createLabel({
 			text: game.judge.name + " started a game about",
@@ -63,17 +64,14 @@ Ti.App.addEventListener('app:play', function(game) {
 	});
 	Ti.App.fireEvent('app:requestGameInfo', {game: game.game});
 	} catch (e) {alert(e);}
-
+    function addPhoto(){
+        Alloy.Globals.game_id = game.game;
+        Alloy.createController('submit',{});
+    };
+    // Handle touch events etc.
+    $.backButton.addEventListener("touchend",function(e){$.play.close();});
+    $.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
+    $.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
+    $.submit.addEventListener("touchend",    function(e){addPhoto();});
 });
-
-
-// Handle touch events etc.
-function addPhoto(){
-	Ti.API.info("Pressed button: Add Photo");
-	Alloy.createController('submit');
-};
-$.backButton.addEventListener("touchend",function(e){$.play.close();});
-$.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
-$.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
-$.submit.addEventListener("touchend",    function(e){addPhoto();});
 
