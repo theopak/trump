@@ -242,7 +242,23 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
     for (var key in games)
     {
-	    gameDataSet.push({ topic: {text: games[key].adjective.adjective}, friends: {text: games[key].participants_text}, pic: {image: "http://graph.facebook.com/"+games[key].judge+"/picture?width=100&height=100"}, properties: {height: 80}});
+	    gameDataSet.push({
+	    	topic: {
+	    		text: games[key].adjective.adjective,
+	    		game_id: games[key].game_id
+	    	},
+	    	friends: {
+	    		text: games[key].participants_text,
+	    		game_id: games[key].game_id
+	    	},
+	    	pic: {
+	    		image: "http://graph.facebook.com/"+games[key].judge+"/picture?width=100&height=100",
+	    		game_id: games[key].game_id
+	    	},
+	    	properties: {
+	    		height: 80
+	    	}
+	    });
     }
     
     gamesList.setItems(gameDataSet);
@@ -262,6 +278,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
 	
 	$.main.add(listView);
+	//Alloy.createController('play').getView().open();
 	//Ti.App.fireEvent('app:play', {game: games[0]});
 	
 });
@@ -271,7 +288,8 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	// http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.ListItem
 	function playMatch(e) {
 		Ti.API.info("playMatch() triggered.");
-    	Ti.App.fireEvent('app:play', {game: gamesList.getItemAt(e.itemIndex)});
+    	var item = gamesList.getItemAt(e.itemIndex);
+    	Ti.App.fireEvent('app:play', {game: e.source.game_id});
 	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
