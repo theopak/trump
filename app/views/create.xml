@@ -8,10 +8,16 @@
 		<View id="main" class="create">
 			<WebView id="webviewproxy"></WebView>
 			<!--<TextField class="friends" id="friends" hintText="Enter csv uids of friends" />-->
-    		<SearchBar id="friends" class="friends" showCancel="false" hintText="Enter csv uids of friends" //>
-			<View class= "submitContainer">
-				<Button id="submit" class="submit" title="Start Game →" />
-			</View>
+			<!--<TableView id="table">
+				<SearchBar id="friends" class="friends" showCancel="false" hintText="Enter csv uids of friends" />
+            	<TableViewSection id="tableSection">
+                	<TableViewRow title="Apple"/>
+	                <TableViewRow title="Bananas"/>
+            	</TableViewSection>
+        	</TableView>-->
+		</View>
+		<View class="submitContainer">
+			<Button id="submit" class="submit" title="Start Game →" />
 		</View>
 	</Window>
 </Alloy>

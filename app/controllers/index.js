@@ -87,7 +87,10 @@ else
 
 $.newGameButton.addEventListener('click', function(e) {
 	Ti.API.info("Pressed button: new game.");
-	Alloy.createController('create').getView().open();
+	if(!Titanium.Network.online)
+		alert("Network connection required.");
+	else
+		Alloy.createController('create').getView().open();
 });
 
 // Create a custom template that displays an image on the left, 
@@ -160,7 +163,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
-    for (var i = 0; i < games.length; i++)
+    for (var i = 0; (games) && (i < games.length); i++)
     {
 	    gameDataSet.push({ topic: {text: games[i].adjective}, friends: {text: games[i].participants}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
     }

@@ -42,7 +42,7 @@
     borderWidth: 0,
     borderBottom: 0
 }
-".friends": {
+"#main": {
 	top: 60,
 	font: {
 		fontFamily: "Omnes-Regular",
@@ -53,7 +53,7 @@
 	bottom: 0,
 	width: Ti.UI.FILL,
 	height: 50
-}
+},
 ".submit": {
 	width: Ti.UI.FILL,
 	height: 50,
@@ -65,7 +65,7 @@
 		fontSize: 26
 	},
 	color: "#FFFFFF"
-}
+},
 "Label": {
 	width: Ti.UI.FULL,
 	height: Ti.UI.FULL,
@@ -80,7 +80,7 @@
 },
 "ListItem": {
 	height: 200
-}
+},
 "Window": {
 	//"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
     navBarHidden: true
