@@ -99,8 +99,7 @@
 
                         });
                         Ti.App.addEventListener('app:requestGameInfo',function(e){
-                            var game_id = e.val().game_id;
-                            Ti.API.info("GAME ID IS "+game_id);
+                            var game_id = e.game;
                             var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
                             game.once("value",function(game_data){
                                 var judge = new Firebase("https://trump.firebaseio.com/users/"+game_data.val().judge+"/");
@@ -191,7 +190,7 @@
                                     var real_game_data_with_participants = real_game_data.val();
                                     real_game_data_with_participants.participants = participants;
                                     real_game_data_with_participants.adjective = adjective;
-                                      
+                                    real_game_data_with_participants.game_id = real_game_data.name();
                                     games.push(real_game_data_with_participants);
                                     if(games.length == num_games){
                                         callback(games);
