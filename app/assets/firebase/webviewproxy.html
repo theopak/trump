@@ -191,6 +191,7 @@
                                     var real_game_data_with_participants = real_game_data.val();
                                     real_game_data_with_participants.participants = participants;
                                     real_game_data_with_participants.adjective = adjective;
+                                    real_game_data_with_participants.game_id = real_game_data.name();
                                       
                                     games.push(real_game_data_with_participants);
                                     if(games.length == num_games){
