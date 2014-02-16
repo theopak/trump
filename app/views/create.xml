@@ -1,7 +1,10 @@
 <Alloy>
-	<Window class="container">
+	<Window id="win" class="container">
 		<View class="header">
 			<View class="headerContent">
+				<View class="addView">
+					<ImageView image="../../new@2x.png" id="backButton">Cancel</ImageView>
+				</View>
 				<Label class="white" id="title">New Game</Label>
 			</View>
 		</View>

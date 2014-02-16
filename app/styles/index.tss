@@ -17,7 +17,7 @@
 	width: "auto",
 	height: 70,
 	right: 0
-}
+},
 ".addView": {
 	top: 0,
 	right: 0,

@@ -6,9 +6,9 @@ $.index.open();
 //    Ti.App.fireEvent('android_back_button');
 //});
 
-var win = $.index;
+//var win = $.index;
 
-Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
+Ti.App.addEventListener('app:webviewproxyDidLoad', function(){
     // load the facebook module
     var fb = require('facebook');
     fb.appid = 259836610857049;
@@ -25,13 +25,13 @@ Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
                 ok: 'Okay',
                 title: 'Sign-in required'
                 });
-            dialog.addEventListener("click",function(e){fb.authorize();});
+            dialog.addEventListener("click", function(e){fb.authorize();});
             dialog.show();
         }
     });
     
     Ti.App.addEventListener("app:fbAuthed",function(e){
-        fb.requestWithGraphPath("me/friends",{access_token:fb.getAccessToken()},"GET",function(e){
+        fb.requestWithGraphPath("me/friends", {access_token: fb.getAccessToken()}, "GET", function(e){
             var trump_friends = [];
             // e.result.forEach(function(friend){
 //                                
@@ -56,7 +56,7 @@ Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     
     // check to see if our auth token is valid.  Seriously, this is the way to do it...
     // https://developers.facebook.com/blog/post/2011/05/13/how-to--handle-expired-access-tokens/
-    fb.requestWithGraphPath("me",{access_token:fb.getAccessToken()},"GET",function(e)
+    fb.requestWithGraphPath("me", {access_token: fb.getAccessToken()}, "GET", function(e)
     {
         if(e.success){
             // our access token is still valid.  Phew...
@@ -70,7 +70,7 @@ Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
         }
         else
         {
-            Ti.App.fireEvent("app:fbAuthed",{access_token:fb.accessToken});
+            Ti.App.fireEvent("app:fbAuthed", {access_token: fb.accessToken});
         }
 
     });
@@ -87,10 +87,13 @@ else
 
 $.newGameButton.addEventListener('click', function(e) {
 	Ti.API.info("Pressed button: new game.");
-	if(!Titanium.Network.online)
+	if(!Titanium.Network.online) {
 		alert("Network connection required.");
-	else
+	} else {
+		//var nextWindow = Alloy.createController('create').getView();
+   		//$.window.openWindow(nextWindow);
 		Alloy.createController('create').getView().open();
+	}
 });
 
 // Create a custom template that displays an image on the left, 
@@ -159,6 +162,9 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('games:'+games);
 	if (games == null || games.length == 0) {
 		return;
+	} else {
+		// The empty state contains copy from the xml view.
+		$.emptystate.remove();
 	}
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
@@ -190,6 +196,7 @@ if(OS_IOS)
     listView.separatorStyle = 0;
 }
 $.main.add(listView);
+$.index.open();
 
 // newview = Alloy.createController("create").getView();
 // 

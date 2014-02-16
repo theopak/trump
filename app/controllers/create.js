@@ -39,6 +39,7 @@ var searchBar = Ti.UI.createSearchBar({
     //prompt: "to: ",				// centered text above field
     top: 60,						// absolute position
     //bottom: 50,
+    width: Ti.UI.FULL,
     minHeight: 35,
     barColor: 'white',
     color: 'black',
@@ -103,6 +104,7 @@ function submitGame(){
 	var checked = "1,2";
 	Ti.App.fireEvent('app:createGame', {friends: checked});
 };
+$.backButton.addEventListener("touchend",function(e){$.win.close();});
 $.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
 $.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
 $.submit.addEventListener("touchend",    function(e){submitGame();});
