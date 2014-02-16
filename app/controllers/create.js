@@ -44,7 +44,7 @@ Ti.App.addEventListener('app:friendListAcquired', function(message) {
 		color : "#444",
 		font : {
 			fontFamily : "Omnes-Regular",
-			fontSize : 20
+			fontSize : 26
 		},
 		backgroundColor : "#F0F0F0",
 		//searchHidden: true,		  // Set to true to hide the search field.
