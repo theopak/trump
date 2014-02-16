@@ -97,6 +97,7 @@ Ti.App.addEventListener('app:friendListAcquired', function(message) {
 			friends : checked_list
 		});
 		$.win.close();
+		//Alloy.createController('play').getView().open();
 	};
 	$.backButton.addEventListener("touchend", function(e) {
 		$.win.close();

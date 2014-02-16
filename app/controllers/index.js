@@ -49,6 +49,7 @@ emptyStateView.add(emptyStateBody);
 
 // If the user doesn't have any games, present an engaging empty state.
 function displayEmptyState() {
+	Ti.API.info("Displaying...");
 	$.index.add(emptyStateView);
 	emptyStateView.animate({
       	top: 80,
@@ -261,6 +262,8 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
 	
 	$.main.add(listView);
+	Alloy.createController('play').getView().open();
+	//Ti.App.fireEvent('app:play', {game: games[0]});
 	
 });
 
