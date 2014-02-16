@@ -1,8 +1,7 @@
-".container": {
-	backgroundColor:"white",
-	font: {
-		fontFamily: "Omnes-Regular"
-	}
+".content": {
+	left: 0,
+	right: 0,
+	backgroundColor: "#F0F0F0",
 },
 ".header": {
 	top: 0,
@@ -19,16 +18,18 @@
 		fontSize: 26
 	}
 },
+"#backButton": {
+	width: "auto",
+	height: 70,
+	left: 0
+},
 ".addView": {
 	top: 0,
-	right: 0,
-	width: 50
+	left: 0,
+	width: 83,
 },
 ".white": {
 	color: "white"
-},
-".content": {
-	top: 60
 },
 "TextField": {
 	width: Ti.UI.FILL,
@@ -44,10 +45,13 @@
 }
 "#main": {
 	top: 60,
+	left: 0,
+	right: 0,
+	backgroundColor: "#F0F0F0",
 	font: {
 		fontFamily: "Omnes-Regular",
 		fontSize: 20
-	},
+	}
 },
 ".submitContainer": {
 	bottom: 0,
