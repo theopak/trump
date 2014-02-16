@@ -87,7 +87,6 @@
                                 var participants = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/participants/");
                                 participants.once('value',function(participants){
                                     submissions.once('value',function(submissions){
-                                        // LOGIC NEEDS TO BE FIXED
                                         Ti.API.info("PARTICIPANTS" + participants.val());
                                         Ti.API.info("SUBMISSIONS" + submissions.val());
                                         if((Object.keys(submissions.val()).length + 1) == Object.keys(participants.val()).length){
@@ -105,14 +104,31 @@
                             var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
                             game.once("value",function(game_data){
                                 var judge = new Firebase("https://trump.firebaseio.com/users/"+game_data.val().judge+"/");
-                                judge.once("value",function(judge_data){
-                                    var adjective = new Firebase("https://trump.firebaseio.com/adjectives/"+game_data.val().adjective+"/");
-                                    adjective.once("value",function(adjective_data){
-                                        var all_data = {};
-                                        all_data["adjective"] = adjective_data.val().adjective;
-                                        all_data["judge"] = {id:judge_data.val().id,name:judge_data.val().name};
-                                        Ti.App.fireEvent("app:gameInfoAcquired",all_data);    
-                                    });    
+                                var submissions = new Firebase("https://trump.firebaseio.com/games/"+game_data.name()+"/submissions/");
+                                var participants = new Firebase("https://trump.firebaseio.com/games/"+game_data.name()+"/participants/");
+                                participants.once('value',function(participants){
+                                    submissions.once('value',function(submissions){
+                                        judge.once("value",function(judge_data){
+                                            var adjective = new Firebase("https://trump.firebaseio.com/adjectives/"+game_data.val().adjective+"/");
+                                            adjective.once("value",function(adjective_data){
+                                                var all_data = {};
+                                                all_data["adjective"] = adjective_data.val().adjective;
+                                                all_data["judge"] = {id:judge_data.val().id,name:judge_data.val().name};
+                                                var num_submissions = 0;
+                                                if(submissions.val() != null){
+                                                    num_submissions = Object.keys(submissions.val());
+                                                }
+                                                all_data["remaining"] = (Object.keys(participants.val()).length - num_submissions) - 1;
+                                                all_data["has_submitted"] = false;
+                                                for(var key in submissions.val()){
+                                                    if(key == user.id){
+                                                        all_data["has_submitted"] = true;
+                                                    }
+                                                }
+                                                Ti.App.fireEvent("app:gameInfoAcquired",all_data);    
+                                            });    
+                                        });
+                                    });
                                 });
                             });
                         });
