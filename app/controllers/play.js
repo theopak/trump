@@ -1,7 +1,7 @@
-//Ti.App.addEventListener('app:play', function(game) {
+Ti.App.addEventListener('app:play', function(game) {
 	
-	//Ti.API.info("Event Fired: app:play.");
-	//$.play.open();
+	Ti.API.info("Event Fired: app:play.");
+	$.play.open();
 	var gameView = Ti.UI.createView({
 	   	top: 300,		// Initialized far away and animated into place to 15
 	   	opacity: 0,		// Initialized transparent and animated to fully opaque state
@@ -11,7 +11,7 @@
 		backgroundColor: "transparent",
 	});
 	var gameViewJudge = Ti.UI.createLabel({
-		text: Ti.App.game.judge + " started a game about",
+		text: game.judge + " started a game about",
 		//text: "Derek started a game about",
 		top: 15,
 		left: 20,
@@ -24,7 +24,7 @@
 		},
 	});
 	var gameViewTopic = Ti.UI.createLabel({
-		text: Ti.App.game.adjective,
+		text: game.adjective,
 		//text: "BORING",
 		top: 45,
 		left: 20,
@@ -48,7 +48,7 @@
 	     	curve: Ti.UI.ANIMATION_CURVE_EASE_OUT,
 	});
 	
-//});
+});
 
 
 // Handle touch events etc.

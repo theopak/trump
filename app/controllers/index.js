@@ -7,8 +7,7 @@
 //});
 
 //var win = $.index;
-Ti.App.game.adjective = "BORING";
-Ti.App.game.judge = "Derek";
+Ti.include('play.js');
 
 
 Alloy.createController('play');
@@ -275,8 +274,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	// http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.ListItem
 	function playMatch(e) {
 		Ti.API.info("playMatch() triggered.");
-    	Ti.App.game = gamesList.getItemAt(e.itemIndex);
-    	Alloy.createController('play').getView().open();
+    	Ti.App.fireEvent('app:play', {game: gamesList.getItemAt(e.itemIndex)});
 	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
