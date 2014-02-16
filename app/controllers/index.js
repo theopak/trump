@@ -277,6 +277,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
+	Ti.API.info("Number of games is "+Object.keys(games).length);
 	for(var key in games){
 	    games[key].participants_text = "";
 	    for(var i = 0; i < games[key].participants.length;i++){

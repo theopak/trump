@@ -9,9 +9,9 @@ var checked = {};
 Ti.App.fireEvent('app:requestFriendList');
 Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	friends = message.friends;
-	
+	Ti.API.warn("FRIENDS LIST 1"+friends[0].id);
 	for (var i = 0; i < friends.length; i++) {
-		checkboxArray.push({ hasCheck: false, title: friends[i].name, leftImage: 'http://graph.facebook.com/'+friends[i].id+'/picture?type=small', uid: friends[i].id });
+		checkboxArray.push({ hasCheck: false, title: friends[i].name, leftImage: 'http://graph.facebook.com/'+friends[i].id+'/picture?type=small', accessibilityValue: friends[i].id });
 	}
 	
 	// Make a UI searchbar that filters the contents of a UI tableview.
@@ -71,7 +71,7 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	tableView.addEventListener('click', function(e){
 	    var row = e.row;
 	    row.hasCheck = !row.hasCheck;
-	    checked[row.uid] = row.hasCheck;
+	    checked[row.accessibilityValue] = row.hasCheck;
 	    if(row.hasCheck)
 	    	row.color = "black";
 	    else
@@ -88,9 +88,9 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 		for (var key in checked) {
 			if (checked[key]) {
 				checked_list.push(key);
+				Ti.API.info("Next key is "+key);
 			}
 		}
-		
 		Ti.App.fireEvent('app:createGame', {friends: checked_list});
 		$.win.close();
 	};

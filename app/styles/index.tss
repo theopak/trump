@@ -1,5 +1,5 @@
 ".container": {
-	backgroundColor:"white",
+	backgroundColor:"#F0F0F0",
 	font: {
 		fontFamily: "Omnes-Regular"
 	}
@@ -21,7 +21,7 @@
 ".addView": {
 	top: 0,
 	right: 0,
-	width: 83,
+	width: 83
 },
 ".white": {
 	color: "white"
@@ -29,9 +29,6 @@
 ".content": {
 	top: 60,
 	backgroundColor: "#F0F0F0"
-},
-".content ListView": {
-	backgroundColor: "white"
 },
 "Label": {
 	width: Ti.UI.SIZE,
