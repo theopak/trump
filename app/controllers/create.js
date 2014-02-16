@@ -27,10 +27,16 @@ $.submit.addEventListener("touchend", function(e){
 // (?): https://developer.appcelerator.com/question/27291/button-inside-a-view---inside-a-tableviewrow
 // (?): http://developer.appcelerator.com/question/124202/how-to-add-a-text-and-a-checkbox-on-a-tableviewrow
 // My Data-array for Table-view
-var checkboxArray = [  
-  { hasCheck: false, title: "Derek Schultz", leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg" },
-  { hasCheck: false, title: "Dan Bulger",    leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg" },
-];
+var checkboxArray = [];
+
+Ti.App.fireEvent('app:requestFriendList');
+
+Ti.App.addEventListener('app:friendListAcquired', function (message) {
+	for (var key in friends) {
+		checkboxArray.push({ hasCheck: false, title: friends[key].name, leftImage: friends[key].picture });
+	}
+});
+
 
 // Make a UI searchbar that filters the contents of a UI tableview.
 var searchBar = Ti.UI.createSearchBar({
