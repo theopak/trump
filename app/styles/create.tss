@@ -75,11 +75,12 @@
 	height: Ti.UI.FULL,
 	color: "#000"
 },
-"ListView": {
-	separatorStyle: 0
-},
-"ListItem": {
-	height: 200
+"TableViewRow": {
+	height: 300,
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
 },
 "#webviewproxy": {
 	width: 0,

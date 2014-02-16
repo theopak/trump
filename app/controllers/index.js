@@ -1,4 +1,4 @@
-$.index.open();
+//$.index.open();
 
 // http://stackoverflow.com/a/15930390
 //$.index.addEventListener('android:back', function(e) {
@@ -58,6 +58,55 @@ $.index.open();
        // });
 
 
+
+var emptyStateView = Ti.UI.createView({
+   	top: 300,		// Initialized far away and animated into place to 15
+   	opacity: 0,		// Initialized transparent and animated to fully opaque state
+	left: 10,
+	right: 10,
+   	height: 110,
+	backgroundColor: "white",
+});
+var emptyStateTitle = Ti.UI.createLabel({
+	text: "Trump is a game for friends.",
+	top: 15,
+	left: 20,
+	right: 20,
+   	color: "black",
+   	textAlign: "left",
+   	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 20
+	},
+});
+var emptyStateBody = Ti.UI.createLabel({
+	text: "tap the add button to get started with your first round",
+	top: 45,
+	left: 20,
+	right: 20,
+	textAlign: "left",
+	   color: "black",
+	   textAlign: "left",
+	font: {
+		fontFamily: "Omnes-ExtraLight",
+		fontSize: 20
+	},
+});
+emptyStateView.add(emptyStateTitle);
+emptyStateView.add(emptyStateBody);
+
+// If the user doesn't have any games, present an engaging empty state.
+function displayEmptyState() {
+	$.index.add(emptyStateView);
+	emptyStateView.animate({
+      	top: 80,
+      	opacity: 1,
+      	duration: 350,
+      	curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
+      });
+}
+		
+		
 Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     // load the facebook module
     var fb = require('facebook');
@@ -223,49 +272,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	var games = e.games;
 	Ti.API.info('games:'+games);
 	if (games == null || games.length == 0) {
-		// If the user doesn't have any games, present an engaging empty state.
-		var emptyStateView = Ti.UI.createView({
-	    	top: 300,		// Initialized far away and animated into place to 15
-	    	opacity: 0,		// Initialized transparent and animated to fully opaque state
-			left: 10,
-			right: 10,
-	    	height: 110,
-			backgroundColor: "white",
-		});
-		var emptyStateTitle = Ti.UI.createLabel({
-			text: "Trump is a game for friends.",
-			top: 15,
-			left: 20,
-			right: 20,
-	    	color: "black",
-	    	textAlign: "left",
-	    	font: {
-				fontFamily: "Omnes-Regular",
-				fontSize: 20
-			},
-		});
-		var emptyStateBody = Ti.UI.createLabel({
-			text: "tap the add button to get started with your first round",
-			top: 45,
-			left: 20,
-			right: 20,
-			textAlign: "left",
-	    	color: "black",
-	    	textAlign: "left",
-			font: {
-				fontFamily: "Omnes-ExtraLight",
-				fontSize: 20
-			},
-		});
-		emptyStateView.add(emptyStateTitle);
-		emptyStateView.add(emptyStateBody);
-		$.main.add(emptyStateView);
-		emptyStateView.animate({
-      		top: 15,
-      		opacity: 1,
-      		duration: 350,
-      		curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
-      	});
+		displayEmptyState();
 	}
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
@@ -283,6 +290,12 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
     }
     
     gamesList.setItems(gameDataSet);
+    
+    if (games == null || games.length == 0) {
+    	displayEmptyState();
+    } else {
+    	$.index.remove(emptyStateView);
+    }
 	
 	sections.push(gamesList);
 	
