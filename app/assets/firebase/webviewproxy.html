@@ -76,6 +76,29 @@
                                 });
                             });
                         });
+                        Ti.App.addEventListener("app:photoTaken",function(e){
+                            var url = e.photo_url;
+                            var games = new Firebase("https://trump.firebaseio.com/games/");
+                            games.once("value",function(games){
+                                var game_id = Object.keys(games.val())[0];
+                                Ti.API.warn("GAME ID IS "+game_id);
+                                var submissions = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/submissions/");
+                                submissions.child(user.id).set(url);
+                                var participants = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/participants/");
+                                submissions.child(user.id).set(url);
+                                participants.once('value',function(participants){
+                                    submissions.once('value',function(submissions){
+                                        // LOGIC NEEDS TO BE FIXED
+                                        if(Object.keys(submissions.val()).length == Object.keys(participants.val()).length){
+                                            Ti.API.info("GAME IS READY FOR JUDGING");
+                                            submissions.parent().child("state").set("judging");
+                                            Ti.App.fireEvent("app:judging",{game_id:game_id});
+                                        } 
+                                    });                                
+                                }); 
+                            });
+
+                        });
                         Ti.App.addEventListener('app:createGame', function (event) {
                             try{
                                 var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
