@@ -54,8 +54,8 @@
 	}
 },
 ".submitContainer": {
-	bottom: 0,
-	width: Ti.UI.FILL,
+	bottom: 60,
+	width: "80%",
 	height: 50
 },
 ".submit": {

@@ -7,9 +7,7 @@
 //});
 
 //var win = $.index;
-function openCamera(){
-Alloy.createController('submit');    
-}
+Alloy.createController('play');
 
 var emptyStateView = Ti.UI.createView({
    	top: 300,		// Initialized far away and animated into place to 15
@@ -49,6 +47,7 @@ emptyStateView.add(emptyStateBody);
 
 // If the user doesn't have any games, present an engaging empty state.
 function displayEmptyState() {
+	Ti.API.info("Displaying...");
 	$.index.add(emptyStateView);
 	emptyStateView.animate({
       	top: 80,
@@ -263,6 +262,8 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
 	
 	$.main.add(listView);
+	//Alloy.createController('play').getView().open();
+	Ti.App.fireEvent('app:play', {game: games[0]});
 	
 });
 
@@ -270,6 +271,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	// Changes the item template rather than the list item's color property
 	// http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.ListItem
 	function playMatch(e) {
+		Ti.API.info("playMatch() triggered.");
     	var item = gamesList.getItemAt(e.itemIndex);
     	Ti.App.fireEvent('app:play', {game: e});
 	}
