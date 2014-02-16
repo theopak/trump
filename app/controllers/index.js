@@ -253,7 +253,7 @@ if(OS_IOS)
 {
     listView.separatorStyle = 0;
 }
-$.main.add(listView);
+
 $.index.open();
 
 // newview = Alloy.createController("create").getView();
