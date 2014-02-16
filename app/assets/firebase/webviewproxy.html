@@ -118,6 +118,7 @@
                                                 if(submissions.val() != null){
                                                     num_submissions = Object.keys(submissions.val()).length;
                                                 }
+                                                all_data["current_user_id"] = user.id;
                                                 all_data["remaining"] = (Object.keys(participants.val()).length - num_submissions) - 1;
                                                 all_data["has_submitted"] = false;
                                                 for(var key in submissions.val()){
