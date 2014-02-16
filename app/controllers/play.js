@@ -54,7 +54,7 @@ Ti.App.addEventListener('app:play', function(game) {
 // Handle touch events etc.
 function addPhoto(){
 	Ti.API.info("Pressed button: Add Photo");
-	Alloy.createController('submit').getView().open();
+	Alloy.createController('submit');
 };
 $.backButton.addEventListener("touchend",function(e){$.play.close();});
 $.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
