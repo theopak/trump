@@ -28,7 +28,7 @@ Ti.App.addEventListener('app:play', function(game) {
 		var gameViewTopic = Ti.UI.createLabel({
 			text: game.adjective,
 			//text: "BORING",
-			top: 130,
+			top: 145,
 			left: 20,
 			right: 20,
 			textAlign: "left",
@@ -39,12 +39,12 @@ Ti.App.addEventListener('app:play', function(game) {
 			opacity: 0.8,
 			font: {
 				fontFamily: "Proxima Nova-Extra Bold",
-				fontSize: 52
+				fontSize: 32
 			},
 		});
 		var gameViewPicture = Ti.UI.createImageView({
 			image: "http://graph.facebook.com/"+gamedata.judge.id+"/picture?width=200&height=200",
-			top: 105,
+			top: 110,
 			borderRadius: 200,
 			width: 200,
 			height: 200
