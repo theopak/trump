@@ -34,8 +34,8 @@ Ti.App.fireEvent('app:requestFriendList');
 Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	friends = message.friends;
 	
-	for (var key in friends) {
-		checkboxArray.push({ hasCheck: false, title: friends[key].name, leftImage: 'http://graph.facebook.com/'+key+'/picture?type=small', uid: key });
+	for (var i = 0; i < friends.length; i++) {
+		checkboxArray.push({ hasCheck: false, title: friends[i].name, leftImage: 'http://graph.facebook.com/'+friends[i].id+'/picture?type=small', uid: friends[i].id });
 	}
 	
 	// Make a UI searchbar that filters the contents of a UI tableview.
