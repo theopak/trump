@@ -18,16 +18,11 @@ $.submit.addEventListener("touchstart",  function(){$.submit.backgroundColor = "
 //$.submit.addEventListener("touchend",    function(){$.submit.backgroundColor = "#7C9A5B";});
 $.submit.addEventListener("touchcancel", function(){$.submit.backgroundColor = "#7C9A5B";});
 
-$.submit.addEventListener("touchend", function(e){
-	Ti.API.info("Pressed button: Invite.");
-	$.submit.backgroundColor = "#7C9A5B";	
-	Ti.App.fireEvent('app:createGame', {friends: $.friends.value.split(',')});
-});
-
 // (?): https://developer.appcelerator.com/question/27291/button-inside-a-view---inside-a-tableviewrow
 // (?): http://developer.appcelerator.com/question/124202/how-to-add-a-text-and-a-checkbox-on-a-tableviewrow
 // My Data-array for Table-view
 var checkboxArray = [];
+var tableView;
 
 Ti.App.fireEvent('app:requestFriendList');
 
@@ -54,7 +49,7 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	    //borderRadius: 0,
 	    //borderWidth: 1
 	});
-	var tableView = Ti.UI.createTableView({
+	tableView = Ti.UI.createTableView({
 	    width: "100%",
 	    height: "100%",
 	    data: checkboxArray,
