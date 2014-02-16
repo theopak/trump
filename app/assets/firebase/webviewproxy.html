@@ -51,8 +51,13 @@
                                         var my_friend = new Firebase("https://trump.firebaseio.com/users/"+e.friend_ids[i]+"/");
                                         my_friend.once("value",function(friend_data){
                                             if(friend_data.val() != null){
-                                                firebase.child('users').child(user.id).child("friends").push(friend_data.val().id);
-                                                firebase.child('users').child(friend_data.val().id).child("friends").push(user.id);
+                                                var dict_1 = {};
+                                                dict_1[friend_data.val().id] = friend_data.val().id;
+                                                var dict_2 = {};
+                                                dict_2[user.id] = user.id;
+
+                                                firebase.child('users').child(user.id).child("friends").update(dict_1);
+                                                firebase.child('users').child(friend_data.val().id).child("friends").update(dict_2);
                                             }
                                         });
                                     }
@@ -82,7 +87,7 @@
                                     
                                     var games = new Firebase('https://trump.firebaseio.com/games/');
                                     Ti.API.info(event.friends);
-                                    
+                                    event.friends.push(user.id);
                                     var newPushRef = games.push();
                                     newPushRef.set({
                                         adjective: adjective_id,
@@ -92,6 +97,7 @@
                                     var pushedName = newPushRef.name();
                                     Ti.API.info("PUSHED NAME IS "+pushedName);
                                     var friends = event.friends;
+                                    Ti.API.info("NUM FRIENDS IS "+friends.length);
                                     
                                     for (var i = 0; i < friends.length; i++)
                                     {
@@ -99,8 +105,8 @@
                                         friend_games.push(pushedName);
                                     }
                                     // add myself to the game :)
-                                    friend_games = new Firebase('https://trump.firebaseio.com/users/'+user.id+'/games/');
-                                    friend_games.push(pushedName);
+                                    // friend_games = new Firebase('https://trump.firebaseio.com/users/'+user.id+'/games/');
+                                    // friend_games.push(pushedName);
                                     
                             });
                             }catch(exception){alert(exception);}  
@@ -162,6 +168,7 @@
                     }
                     var participants = [];
                     var num_participants = participant_id_arr.length;
+                    Ti.API.info("num_participants is "+num_participants);
                     for(var i=0;i<num_participants;i++){
                         var participant_retriever = new Firebase("https://trump.firebaseio.com/users/"+participant_id_arr[i]+"/");
                         participant_retriever.once("value",function(real_participant_data){
