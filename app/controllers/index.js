@@ -7,7 +7,7 @@
 //});
 
 //var win = $.index;
-Alloy.createController('play');
+//Alloy.createController('play');
 
 var emptyStateView = Ti.UI.createView({
    	top: 300,		// Initialized far away and animated into place to 15
@@ -279,7 +279,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
 	
 	$.main.add(listView);
-	//Alloy.createController('play').getView().open();
+	//Alloy.createController('play', {game: games[0]}).getView().open();
 	//Ti.App.fireEvent('app:play', {game: games[0]});
 	
 });
@@ -288,15 +288,23 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	// Changes the item template rather than the list item's color property
 	// http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.ListItem
 	function playMatch(e) {
-		Ti.API.info("playMatch() triggered.");
+		Ti.API.info("playMatch() triggered: " + e);
     	var item = gamesList.getItemAt(e.itemIndex);
-    	
+
+    	// //Ti.App.fireEvent('app:play', {game: e.source.game_id});
+    	// //Alloy.createController('play', {game: e.source.game_id}).getView().open();
+    	// var demoGame = [];
+    	// demoGame.adjective = "Demonstable";
+    	// demoGame.judge = {name: "Derek", id: 0};
+    	// Alloy.createController('play', {game: demoGame}).getView().open();
+
     	Ti.API.info("KEYS ARE"+Object.keys(item));
     	if(OS_ANDROID){
     	    Ti.App.fireEvent('app:play', {game: item.pic.game_id});
     	}else{
             Ti.App.fireEvent('app:play', {game: e.source.game_id});    	    
     	}
+
 	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {

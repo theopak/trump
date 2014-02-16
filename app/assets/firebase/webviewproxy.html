@@ -132,6 +132,47 @@
                                 });
                             });
                         });
+                        Ti.App.addEventListener("app:winnerChosen",function(e){
+                            try{
+                                var game_id = e.game;
+                                var chosen_id = e.winner;
+                                var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
+                                game.child("winner").set(chosen_id);
+                                game.child("state").set("judged");
+                            }catch(e){alert(e);}
+                        });
+                        Ti.App.addEventListener('app:requestSubmissions',function(e){
+                            try{
+                                var game_id = e.game;
+                                var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
+                                
+                                var submissions = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/submissions/");
+                                var participants = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/participants/");
+                                submissions.once("value",function(submission_data){
+                                    participants.once("value",function(participant_data){
+                                        convert_participant_ids_to_players(participant_data.val(),function(players){
+                                            var final_data = [];
+                                            var submission_arr = [];
+                                            for(var key in submissions){
+                                                submission_arr.push(submissions[key]);
+                                            }
+                                            for(var i = 0; i < players.length; i++){
+                                                for(var key in submissions){
+                                                    var url = "";
+                                                    if(key == players[i].id){
+                                                        url = submissions[key]; 
+                                                    }
+                                                }
+                                                final_data.push({id:players[i].id,name:players[i].name,url:url});
+                                                Ti.App.fireEvent("app:submissionsAcquired",final_data);
+                                            }        
+                                        });
+                                    });  
+                                });
+
+                                
+                            }catch(e){alert(e);} 
+                        });
                         Ti.App.addEventListener('app:createGame', function (event) {
                             try{
                                 var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
