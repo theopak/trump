@@ -1,0 +1,18 @@
+<Alloy>
+	<Window class="container">
+		<View class="header">
+			<View class="headerContent">
+				<View class="addView">
+					<ImageView image="../../new@2x.png" id="backButton">Games</ImageView>
+				</View>
+				<Label class="white" id="title">Play</Label>
+			</View>
+		</View>
+		<View id="main" class="create">
+			<!-- <WebView id="webviewproxy"></WebView> -->
+		</View>
+		<View class="submitContainer">
+			<Button id="submit" class="submit" title="Add Photo" />
+		</View>
+	</Window>
+</Alloy>

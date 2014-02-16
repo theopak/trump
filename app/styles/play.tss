@@ -1,0 +1,92 @@
+".content": {
+	left: 0,
+	right: 0,
+	backgroundColor: "#F0F0F0",
+},
+".header": {
+	top: 0,
+	height: 60,
+	backgroundColor: "#D56D79"
+},
+".headerContent": {
+	top: Alloy.Globals.top,
+	color: "white"
+},
+"#title": {
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
+},
+"#backButton": {
+	width: "auto",
+	height: 70,
+	left: 0
+},
+".addView": {
+	top: 0,
+	left: 0,
+	width: 83,
+},
+".white": {
+	color: "white"
+},
+"TextField": {
+	width: Ti.UI.FILL,
+	font: {
+		fontFamily: "Omnes-Regular"
+	},
+	textAlign: "left",
+	color: "black",
+	borderColor: "#444",
+    borderRadius: 0,
+    borderWidth: 0,
+    borderBottom: 0
+}
+"#main": {
+	top: 60,
+	left: 0,
+	right: 0,
+	backgroundColor: "#F0F0F0",
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 20
+	}
+},
+".submitContainer": {
+	bottom: 0,
+	width: Ti.UI.FILL,
+	height: 50
+},
+".submit": {
+	width: Ti.UI.FILL,
+	height: 50,
+	lineHeight: 50,
+	backgroundColor: "#7C9A5B",
+	textAlign: "center",
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	},
+	color: "#FFFFFF"
+},
+"Label": {
+	width: Ti.UI.FULL,
+	height: Ti.UI.FULL,
+	color: "#000"
+},
+"TableViewRow": {
+	height: 300,
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
+},
+"#webviewproxy": {
+	width: 0,
+	height: 0
+},
+"Window": {
+	//"_comment": "https://developer.appcelerator.com/question/59111/how-can-i-hide-title-bar-of-window-in-android",
+    navBarHidden: true
+}

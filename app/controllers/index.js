@@ -102,7 +102,7 @@ function displayEmptyState() {
       	top: 80,
       	opacity: 1,
       	duration: 350,
-      	curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
+      	curve: Ti.UI.ANIMATION_CURVE_EASE_OUT,
       });
 }
 		
@@ -196,7 +196,7 @@ else
     $.webviewproxy.url = "../../firebase/webviewproxy.html";
 }
 
-$.newGameButton.addEventListener('click', function(e) {
+$.newGameButton.addEventListener('touchend', function(e) {
 	Ti.API.info("Pressed button: new game.");
 	if(!Titanium.Network.online) {
 		alert("Network connection required.");
@@ -255,7 +255,9 @@ var myTemplate = {
         		right: 10
         	}
         }
-    ]
+    ],
+    // Binds a callback to the click event, which catches events bubbled by the view subcomponents.
+    events: {click: playMatch}
 };
 
 var listView = Ti.UI.createListView({
@@ -266,6 +268,7 @@ var listView = Ti.UI.createListView({
     defaultItemTemplate: 'template'
 });
 
+var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('gameListChanged');
 	var sections = [];
@@ -275,7 +278,6 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 		displayEmptyState();
 	}
 	Ti.API.info('past');
-	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
 	Ti.API.info("Number of games is "+Object.keys(games).length);
 	for(var key in games){
@@ -307,7 +309,16 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
 	
 	$.main.add(listView);
+	
 });
+
+	// Modified version of the `itemclick` event listener
+	// Changes the item template rather than the list item's color property
+	// http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.ListItem
+	function playMatch(e) {
+    	var item = gamesList.getItemAt(e.itemIndex);
+    	Ti.App.fireEvent('app:play', {game: e});
+	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
 	// Ti.App.fireEvent('app:createGame', {friends: [0]});
