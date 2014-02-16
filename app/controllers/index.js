@@ -205,7 +205,8 @@ var myTemplate = {
         	bindId: 'arrow',
         	properties: {
         		image: 'line.png',
-        		right: 10
+        		right: 10,
+        		height: 20
         	}
         }
     ],
