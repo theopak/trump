@@ -1,8 +1,10 @@
 Titanium.Media.showCamera({
-	success:function(event) {             
+	success:function(event) { 
+	    Ti.API.info("WE TOOK A PICTURE");            
 		var media = event.media;
-		var xhr = Titanium.Network.createHTTPClient();
-		      
+		try{
+		  var xhr = Titanium.Network.createHTTPClient();
+		}catch(e){alert(e);}  
 		xhr.onerror = function(e){
 			Ti.API.info('IN ERROR ' + e.error);
 			Ti.UI.createAlertDialog({message: 'Sorry, we could not upload your photo! Please try again.', title: 'Oops', ok: 'OK'});
@@ -18,11 +20,9 @@ Titanium.Media.showCamera({
 		};
 					                     
 		// open the client
-		xhr.open('POST', 'http://d.trumpyourfriends.com/upload.php'); //the server location comes from the 'strings.xml' file 
- 
- 		var fileName = Titanium.App.Properties.getString('back.png');
-	    var uploadFile = Titanium.Filesystem.getFile('assets', fileName);
-	    var fileContents = uploadFile.read();
+		try{
+		  xhr.open('POST', 'http://d.trumpyourfriends.com/upload.php'); //the server location comes from the 'strings.xml' file 
+        }catch(e){alert(e);}
 	
 		// send the data
 		xhr.send({

@@ -7,12 +7,7 @@
 //});
 
 //var win = $.index;
-Ti.include('play.js');
-
-
 Alloy.createController('play');
-Alloy.createController('submit');
-
 
 var emptyStateView = Ti.UI.createView({
    	top: 300,		// Initialized far away and animated into place to 15
@@ -141,6 +136,8 @@ Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
         }
 
     });
+    
+
 
 });
 if(OS_IOS)
