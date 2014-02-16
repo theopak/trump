@@ -156,9 +156,9 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('games:'+games);
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
-    for (var i = 0; i < games.length; i++)
+    for(var key in games)
     {
-	    gameDataSet.push({ info: {text: games[i].adjective}, participants: {text: games[i].participants.join(', ')}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+	    gameDataSet.push({ info: {text: games[key].adjective}, participants: {text: games[key].participants.join(', ')}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
     }
     gamesList.setItems(gameDataSet);
 	

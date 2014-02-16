@@ -20,7 +20,7 @@ $.submit.addEventListener("touchcancel", function(){$.submit.backgroundColor = "
 
 $.submit.addEventListener("touchend", function(e){
 	Ti.API.info("Pressed button: Invite.");
-	$.submit.backgroundColor = "#7C9A5B";
+	$.submit.backgroundColor = "#7C9A5B";	
 	Ti.App.fireEvent('app:createGame', {friends: $.friends.value.split(',')});
 });
 
@@ -28,14 +28,14 @@ $.submit.addEventListener("touchend", function(e){
 var row = Titanium.UI.createTableViewRow({
     height: 'auto',
     hasChild: true,
-    name: name, // this one
-    pic: pic
+    name: "name", // this one
+    pic: "pic"
 });
 var tableview = Titanium.UI.createTableView({
-    data: data,
+    data: "data",
     filterAttribute: 'name',
     minRowHeight: 60,
-    search: searchBar,
+    search: "searchBar",
     searchHidden: true
 });
 
