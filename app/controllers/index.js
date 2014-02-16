@@ -291,7 +291,13 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	function playMatch(e) {
 		Ti.API.info("playMatch() triggered.");
     	var item = gamesList.getItemAt(e.itemIndex);
-    	Ti.App.fireEvent('app:play', {game: e.source.game_id});
+    	
+    	Ti.API.info("KEYS ARE"+Object.keys(item));
+    	if(OS_ANDROID){
+    	    Ti.App.fireEvent('app:play', {game: item.pic.game_id});
+    	}else{
+            Ti.App.fireEvent('app:play', {game: e.source.game_id});    	    
+    	}
 	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
