@@ -233,7 +233,6 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	var gameDataSet = [];
 	for(var key in games){
 	    games[key].participants_text = "";
-	    alert("games key is" + key);
 	    for(var i = 0; i < games[key].participants.length;i++){
             games[key].participants_text += ", "+games[key].participants[i].name;	        
 	    }
