@@ -1,36 +1,20 @@
-/*
-// http://developer.appcelerator.com/question/93681/how-do-i-set-a-back-button-background-image-and-onclick-background-image#answer-168801
-var btnBack = new Ti.UI.createButton({
-    backgroundImage:'back.png',
-    backgroundSelectedImage:'back.png',
-    width:80,height:25
-});
-var win = new Ti.UI.createWindow({
-    url:'index.js',
-    leftNavButton:btnBack
-});
-btnBack.addEventListener('click', function(){
-    win.close();
-});
-*/
-
-$.submit.addEventListener("touchstart",  function(){$.submit.backgroundColor = "#9CC075";});
-//$.submit.addEventListener("touchend",    function(){$.submit.backgroundColor = "#7C9A5B";});
-$.submit.addEventListener("touchcancel", function(){$.submit.backgroundColor = "#7C9A5B";});
-
-$.submit.addEventListener("touchend", function(e){
-	Ti.API.info("Pressed button: Invite.");
-	$.submit.backgroundColor = "#7C9A5B";	
-	Ti.App.fireEvent('app:createGame', {friends: $.friends.value.split(',')});
-});
-
 // (?): https://developer.appcelerator.com/question/27291/button-inside-a-view---inside-a-tableviewrow
 // (?): http://developer.appcelerator.com/question/124202/how-to-add-a-text-and-a-checkbox-on-a-tableviewrow
 // My Data-array for Table-view
-var checkboxArray = [  
-  { hasCheck: false, title: "Derek Schultz", leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg", uid: 1 },
-  { hasCheck: false, title: "Dan Bulger",    leftImage: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1/c40.0.160.160/p160x160/1394375_10202509459080754_1157139205_n.jpg", uid: 2 }
-];
+var checkboxArray = [];
+var tableView;
+
+
+// Disregard privacy standards; aquire friends.
+Ti.App.fireEvent('app:requestFriendList');
+Ti.App.addEventListener('app:friendListAcquired', function (message) {
+	friends = message.friends;
+	
+	for (var i = 0; i < friends.length; i++) {
+		checkboxArray.push({ hasCheck: false, title: friends[i].name, leftImage: 'http://graph.facebook.com/'+friends[i].id+'/picture?type=small', uid: friends[i].id });
+	}
+});
+
 
 // Make a UI searchbar that filters the contents of a UI tableview.
 var searchBar = Ti.UI.createSearchBar({
@@ -68,16 +52,6 @@ var tableView = Ti.UI.createTableView({
 });
 $.main.add(tableView);
 
-// (?): http://stackoverflow.com/questions/16062363/titanium-alloy-accessing-ui-from-different-controllers
-/*
-for(var i = 0; i < 25; i++) {
-	var row = Ti.UI.createTableViewRow({
-	  // Do not specify 'title' if using Views as children of the Row.
-  	  title: i
-	});
-	tableView.appendRow(row);	
-}*/
-
 
 // Track checked items
 // Hack: record hasCheck of all rows.
@@ -85,7 +59,6 @@ for(var i = 0; i < 25; i++) {
 // var rows = this.data[0].rows;
 // for (var i = 0; i < rows.length; ++i)
     // rows[i].hasCheck = false;*/
-
 var lastRowClicked;
 tableView.addEventListener('click', function(e){
     var row = e.row;
@@ -112,5 +85,5 @@ searchBar.addEventListener("return",     function(e){submitGame();});
 searchBar.addEventListener("blur",       function(e){searchBar.value="";}); 
 
 
-// Now that it's set up, focus on the search bar.
+// Focus the keyboard in the search bar (now that it's available).
 searchBar.focus();

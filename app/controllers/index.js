@@ -8,7 +8,57 @@ $.index.open();
 
 //var win = $.index;
 
-Ti.App.addEventListener('app:webviewproxyDidLoad', function(){
+       // Titanium.Media.showCamera({
+           // success:function(event)
+           // {             
+	           // var media = event.media;
+// 	           
+// 	           
+// 	           
+	           	// var xhr = Titanium.Network.createHTTPClient();
+// 	
+// 	
+// 	            
+					// xhr.onerror = function(e){
+					    // Ti.API.info('IN ERROR ' + e.error);
+					    // alert('Sorry, we could not upload your photo! Please try again.');
+					  // };
+// 					             
+					 // xhr.onload = function(){
+					    // Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState + this.responseText);                     
+					 // };
+// 					         
+					// xhr.onsendstream = function(e){
+					    // Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
+					// };
+// 					                     
+					// // open the client
+					// xhr.open('POST', 'http://d.trumpyourfriends.com/upload.php'); //the server location comes from the 'strings.xml' file 
+// 	 
+				    // var fileName = Titanium.App.Properties.getString('back.png');
+				    // var uploadFile = Titanium.Filesystem.getFile('assets', fileName);
+				    // var fileContents = uploadFile.read();
+// 				
+					// // send the data
+					// xhr.send({
+					    // media: media,
+					// });
+// 
+//                    
+//                    
+           // },
+           // cancel: function()
+           // {   
+           // },
+           // error:function(err)
+           // {
+               // Ti.API.error(err);
+           // },
+           // mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
+       // });
+
+
+Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     // load the facebook module
     var fb = require('facebook');
     fb.appid = 259836610857049;
@@ -169,9 +219,17 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	Ti.API.info('past');
 	var gamesList = Ti.UI.createListSection({ id: 'gamesList'});
 	var gameDataSet = [];
-    for (var i = 0; (games) && (i < games.length); i++)
+	for(var key in games){
+	    games[key].participants_text = "";
+	    alert("games key is" + key);
+	    for(var i = 0; i < games[key].participants.length;i++){
+            games[key].participants_text += ", "+games[key].participants[i].name;	        
+	    }
+	    games[key].participants_text = games[key].participants_text.substring(2);
+	}
+    for (var key in games)
     {
-	    gameDataSet.push({ topic: {text: games[i].adjective}, friends: {text: games[i].participants}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+	    gameDataSet.push({ topic: {text: games[key].adjective.adjective}, friends: {text: games[key].participants_text}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
     }
     
     gamesList.setItems(gameDataSet);

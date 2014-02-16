@@ -15,38 +15,54 @@
                         Ti.API.info('Firebase/Facebook User ID: ' + user.id + ', Provider: ' + user.provider);
                         var user_games = new Firebase("https://trump.firebaseio.com/users/"+user.id+"/games/");
                         user_games.on("value",function(new_user_games_value){
-                            Ti.API.info(new_user_games_value.val());
+                            Ti.API.info("poo"+new_user_games_value.val());
                             if(new_user_games_value.val() == null){
                                 Ti.API.info("There are no games");
                                 Ti.App.fireEvent("app:gameListChanged",{games:[]});
                                 return;
                             }
-                            Ti.API.info(new_user_games_value.val());
+                            Ti.API.info("VAL IS "+new_user_games_value.val());
                             
                             convert_game_ids_to_games(new_user_games_value.val(),function(games){
-                                Ti.API.info(games);
+                                Ti.API.info("HELLO");
+                                Ti.API.info("THE GAMES ARE "+games);
+                                Ti.App.fireEvent("app:gameListChanged",{games:games});
                             });
-                            Ti.App.fireEvent("app:gameListChanged",{games:convert_game_ids_to_games(new_user_games_value.val())});
                         });
                         var firebase_users = new Firebase("https://trump.firebaseio.com/users");
                         firebase_users.once("value",function(children){
+                            alert("HELLO");
                             children_arr = children.val();
                             var child_exists = false;
                             for(var key in children_arr)
                             {
-                                if(children_arr[key] == user.id) child_exists = true;
+                                if(key == user.id){
+                                    child_exists = true;
+                                }
                             }
                             if(!child_exists)
                             {
+                                // new profile creation
                                 var d = {};
-                                d = {id:user.id, total_score:0};
-                                firebase.child('users').child(user.id).set(d);                        
+                                d = {name:user.displayName ,id:user.id, total_score:0};
+                                firebase.child('users').child(user.id).set(d);       
                             }
                         });
+                        Ti.App.addEventListener("app:requestFriendList",function(e){
+                            alert("HELLO2");
+                            var my_friends = new Firebase("https://trump.firebaseio.com/users/"+user.id+"/friends/");
+                            my_friends.once("value",function(friend_data){
+                                convert_participant_ids_to_players(friend_data.val(),function(friends){
+                                    alert(friends);
+                                    Ti.App.fireEvent("app:friendListAcquired",{friends:friends});
+                                });
+                            });
+                        });                        
+                        
                     } else {
                         // user is logged out
                     }
-                  }catch(e){}
+                  }catch(e){alert(e);}
             });
             
             /* LISTEN FOR EVENTS */
@@ -64,19 +80,28 @@
             
             function convert_game_ids_to_games(game_ids,callback){
                 try{
-                    alert(game_ids[0]);
+                    var game_id_arr = [];
+                    for(var key in game_ids)
+                    {
+                        game_id_arr.push(game_ids[key]);
+                    }
+                    
                     var games = [];
-                    var num_games = game_ids.length;
+                    var num_games = game_id_arr.length;
                     for(var i=0;i<num_games;i++){
-                        var game_retriever = new Firebase("https://trump.firebaseio.com/games/"+game_ids[i]+"/");
+                        var game_retriever = new Firebase("https://trump.firebaseio.com/games/"+game_id_arr[i]+"/");
                         game_retriever.once("value",function(real_game_data){
                             convert_participant_ids_to_players(real_game_data.val().participants,function(participants){
-                                var real_game_data_with_participants = real_game_data.val();
-                                real_game_data_with_participants.participants = participants;  
-                                games.push(real_game_data_with_participants);
-                                if(games.length == num_games){
-                                    callback(games);
-                                } 
+                                convert_adjective_id_to_adjective(real_game_data.val().adjective,function(adjective){
+                                    var real_game_data_with_participants = real_game_data.val();
+                                    real_game_data_with_participants.participants = participants;
+                                    real_game_data_with_participants.adjective = adjective;
+                                      
+                                    games.push(real_game_data_with_participants);
+                                    if(games.length == num_games){
+                                        callback(games);
+                                    }  
+                                });
                             });
                         });
                     }
@@ -84,10 +109,14 @@
             }
             function convert_participant_ids_to_players(participant_ids,callback){
                 try{
+                    var participant_id_arr = [];
+                    for(var key in participant_ids){
+                        participant_id_arr.push(participant_ids[key]);
+                    }
                     var participants = [];
-                    var num_participants = participant_ids.length;
+                    var num_participants = participant_id_arr.length;
                     for(var i=0;i<num_participants;i++){
-                        var participant_retriever = new Firebase("https://trump.firebaseio.com/users/"+participant_ids[i]+"/");
+                        var participant_retriever = new Firebase("https://trump.firebaseio.com/users/"+participant_id_arr[i]+"/");
                         participant_retriever.once("value",function(real_participant_data){
                             participants.push(real_participant_data.val());
                             if(participants.length == num_participants){
@@ -97,11 +126,15 @@
                     }
                 }catch(e){alert(e);}
             }
-            
+            function convert_adjective_id_to_adjective(adjective_id,callback){
+                var adjective_retriever = new Firebase("https://trump.firebaseio.com/adjectives/"+adjective_id+"/");
+                adjective_retriever.once("value",function(real_adjective_data){
+                        callback(real_adjective_data.val());
+                });
+            }            
             
             Ti.App.addEventListener('app:createGame', function (event) {
                 try{
-                    alert(event.friends);
     				var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
     				adjective_list.on('value', function (adjectives) {
     					adjectives = adjectives.val();
@@ -110,7 +143,6 @@
     					Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
     					
     					var games = new Firebase('https://trump.firebaseio.com/games/');
-    					alert(event.toString());
     					Ti.API.info(event.friends);
     					
     					var newPushRef = games.push();
@@ -131,6 +163,7 @@
 				});
 				}catch(exception){alert(exception);}  
             });
+            
             		
             /* FIRE EVENTS */
 			Ti.App.fireEvent('app:webviewproxyDidLoad');
