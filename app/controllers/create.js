@@ -112,7 +112,10 @@ Ti.App.addEventListener('app:friendListAcquired', function(message) {
 		submitGame();
 	});
 	searchBar.addEventListener("return", function(e) {
-		submitGame();
+		//submitGame();
+		e.cancelBubble = true;
+		searchBar.value = "";
+		searchBar.blur();
 	});
 	searchBar.addEventListener("blur", function(e) {
 		searchBar.value = "";

@@ -18,15 +18,20 @@
 		fontSize: 26
 	}
 },
+".addView": {
+	top: 0,
+	left: 10,
+	width: 83,
+},
 "#backButton": {
 	width: "auto",
 	height: 70,
-	left: 0
-},
-".addView": {
-	top: 0,
 	left: 0,
-	width: 83,
+	color: "white",
+	font: {
+		fontFamily: "Omnes-Regular",
+		fontSize: 26
+	}
 },
 ".white": {
 	color: "white"

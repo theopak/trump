@@ -99,7 +99,6 @@
 
                         });
                         Ti.App.addEventListener('app:requestGameInfo',function(e){
-                        	Ti.API.info("********** YOU REQUESTED GAME INFO? *************");
                             var game_id = e.game;
                             var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
                             game.once("value",function(game_data){
