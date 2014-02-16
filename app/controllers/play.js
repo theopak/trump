@@ -49,6 +49,19 @@ Ti.App.addEventListener('app:play', function(game) {
 			height: 200
 		});
 		
+		if (gamedata.has_submitted) {
+			alert('you already submitted');
+			$.play.remove($.bottom);
+			var label1;
+			if (gamedata.remaining > 0) {
+				label1 = Ti.UI.createLabel({title: 'Waiting for friends'});
+			}
+			else {
+				label1 = Ti.UI.createLabel({title: 'Waiting for '+gamedata.judge.name});
+			}
+			$.play.add(label1);
+		}
+		
 		gameView.add(gameViewJudge);
 		gameView.add(gameViewTopic);
 		gameView.add(gameViewPicture);
