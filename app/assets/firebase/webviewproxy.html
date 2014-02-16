@@ -4,39 +4,49 @@
 		<script src="https://cdn.firebase.com/js/simple-login/1.2.5/firebase-simple-login.js"></script>
 		<script>
 		try{
-		    
 		    var firebase = new Firebase("https://trump.firebaseio.com/");
             var auth = new FirebaseSimpleLogin(firebase, function (error, user) {
-                if (error) {
-                    // an error occurred while attempting login
-                    alert(error);
-                } else if (user) {
-                    // user authenticated with Firebase
-                    Ti.API.info('Firebase/Facebook User ID: ' + user.id + ', Provider: ' + user.provider);
-                    var firebase_users = new Firebase("https://trump.firebaseio.com/users");
-                    firebase_users.once("value",function(children){
-                        children_arr = children.val();
-                        var child_exists = false;
-                        for(var key in children_arr)
-                        {
-                            if(children_arr[key] == user.id) child_exists = true;
-                        }
-                        if(!child_exists)
-                        {
-                            var d = {};
-                            d = {id:user.id, total_score:0};
-                            firebase.child('users').child(user.id).set(d);                        
-                        }
-                    });
-                    
-                    var user_games = new Firebase('https://trump.firebaseio.com/users/'+user.id+'/games/');
-                    user_games.on('value', function (gamedata) {
-                		Ti.App.fireEvent('app:gameListChanged', { games: gamedata.val() });
-            		});
-
-                } else {
-                    // user is logged out
-                }
+                try{
+                    if (error) {
+                        // an error occurred while attempting login
+                        alert(error);
+                    } else if (user) {
+                        // user authenticated with Firebase
+                        Ti.API.info('Firebase/Facebook User ID: ' + user.id + ', Provider: ' + user.provider);
+                        var user_games = new Firebase("https://trump.firebaseio.com/users/"+user.id+"/games/");
+                        user_games.on("value",function(new_user_games_value){
+                            Ti.API.info(new_user_games_value.val());
+                            if(new_user_games_value.val() == null){
+                                Ti.API.info("There are no games");
+                                Ti.App.fireEvent("app:gameListChanged",{games:[]});
+                                return;
+                            }
+                            Ti.API.info(new_user_games_value.val());
+                            
+                            convert_game_ids_to_games(new_user_games_value.val(),function(games){
+                                Ti.API.info(games);
+                            });
+                            Ti.App.fireEvent("app:gameListChanged",{games:convert_game_ids_to_games(new_user_games_value.val())});
+                        });
+                        var firebase_users = new Firebase("https://trump.firebaseio.com/users");
+                        firebase_users.once("value",function(children){
+                            children_arr = children.val();
+                            var child_exists = false;
+                            for(var key in children_arr)
+                            {
+                                if(children_arr[key] == user.id) child_exists = true;
+                            }
+                            if(!child_exists)
+                            {
+                                var d = {};
+                                d = {id:user.id, total_score:0};
+                                firebase.child('users').child(user.id).set(d);                        
+                            }
+                        });
+                    } else {
+                        // user is logged out
+                    }
+                  }catch(e){}
             });
             
             /* LISTEN FOR EVENTS */
@@ -51,36 +61,77 @@
                     access_token: e.access_token
                 });
             });
-            Ti.App.addEventListener("app:");
+            
+            function convert_game_ids_to_games(game_ids,callback){
+                try{
+                    alert(game_ids[0]);
+                    var games = [];
+                    var num_games = game_ids.length;
+                    for(var i=0;i<num_games;i++){
+                        var game_retriever = new Firebase("https://trump.firebaseio.com/games/"+game_ids[i]+"/");
+                        game_retriever.once("value",function(real_game_data){
+                            convert_participant_ids_to_players(real_game_data.val().participants,function(participants){
+                                var real_game_data_with_participants = real_game_data.val();
+                                real_game_data_with_participants.participants = participants;  
+                                games.push(real_game_data_with_participants);
+                                if(games.length == num_games){
+                                    callback(games);
+                                } 
+                            });
+                        });
+                    }
+                }catch(e){alert(e);}
+            }
+            function convert_participant_ids_to_players(participant_ids,callback){
+                try{
+                    var participants = [];
+                    var num_participants = participant_ids.length;
+                    for(var i=0;i<num_participants;i++){
+                        var participant_retriever = new Firebase("https://trump.firebaseio.com/users/"+participant_ids[i]+"/");
+                        participant_retriever.once("value",function(real_participant_data){
+                            participants.push(real_participant_data.val());
+                            if(participants.length == num_participants){
+                                callback(participants);
+                            }
+                        });
+                    }
+                }catch(e){alert(e);}
+            }
+            
             
             Ti.App.addEventListener('app:createGame', function (event) {
-				var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
-				adjective_list.on('value', function (adjectives) {
-					adjectives = adjectives.val();
-					adjective_id = randInt(0, adjectives.length);
-					selection = adjectives[adjective_id];
-					Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
-					
-					var games = new Firebase('https://trump.firebaseio.com/games/');
-					Ti.API.info(event.friends);
-					
-					var newPushRef = games.push();
-					newPushRef.set({
-						adjective: adjective_id,
-						participants: event.friends
-					});
-					var pushedName = newPushRef.name();
-					var friends = event.friends;
-					
-					for (var i = 0; i < friends.length; i++)
-					{
-						friend_games = new Firebase('https://trump.firebaseio.com/users/'+friends[i]+'/games/');
-						friend_games.push(pushedName);
-					}
-
+                try{
+                    alert(event.friends);
+    				var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
+    				adjective_list.on('value', function (adjectives) {
+    					adjectives = adjectives.val();
+    					adjective_id = randInt(0, adjectives.length);
+    					selection = adjectives[adjective_id];
+    					Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
+    					
+    					var games = new Firebase('https://trump.firebaseio.com/games/');
+    					alert(event.toString());
+    					Ti.API.info(event.friends);
+    					
+    					var newPushRef = games.push();
+    					newPushRef.set({
+    						adjective: adjective_id,
+    						participants: event.friends
+    					});
+    					Ti.API.info("NEW PUSH REF IS "+newPushRef);
+    					var pushedName = newPushRef.name();
+    					Ti.API.info("PUSHED NAME IS "+pushedName);
+    					var friends = event.friends;
+    					
+    					for (var i = 0; i < friends.length; i++)
+    					{
+    						friend_games = new Firebase('https://trump.firebaseio.com/users/'+friends[i]+'/games/');
+    						friend_games.push(pushedName);
+    					}
 				});
+				}catch(exception){alert(exception);}  
             });
-            			
+            		
             /* FIRE EVENTS */
 			Ti.App.fireEvent('app:webviewproxyDidLoad');
 			
