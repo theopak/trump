@@ -1,31 +1,12 @@
-/*
-// http://developer.appcelerator.com/question/93681/how-do-i-set-a-back-button-background-image-and-onclick-background-image#answer-168801
-var btnBack = new Ti.UI.createButton({
-    backgroundImage:'back.png',
-    backgroundSelectedImage:'back.png',
-    width:80,height:25
-});
-var win = new Ti.UI.createWindow({
-    url:'index.js',
-    leftNavButton:btnBack
-});
-btnBack.addEventListener('click', function(){
-    win.close();
-});
-*/
-
-$.submit.addEventListener("touchstart",  function(){$.submit.backgroundColor = "#9CC075";});
-//$.submit.addEventListener("touchend",    function(){$.submit.backgroundColor = "#7C9A5B";});
-$.submit.addEventListener("touchcancel", function(){$.submit.backgroundColor = "#7C9A5B";});
-
 // (?): https://developer.appcelerator.com/question/27291/button-inside-a-view---inside-a-tableviewrow
 // (?): http://developer.appcelerator.com/question/124202/how-to-add-a-text-and-a-checkbox-on-a-tableviewrow
 // My Data-array for Table-view
 var checkboxArray = [];
-var tableView;
+var checked = {};
 
+
+// Disregard privacy standards; aquire friends.
 Ti.App.fireEvent('app:requestFriendList');
-
 Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	friends = message.friends;
 	
@@ -49,7 +30,7 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	    //borderRadius: 0,
 	    //borderWidth: 1
 	});
-	tableView = Ti.UI.createTableView({
+	var tableView = Ti.UI.createTableView({
 	    width: "100%",
 	    height: "100%",
 	    data: checkboxArray,
@@ -86,10 +67,11 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	// for (var i = 0; i < rows.length; ++i)
 	    // rows[i].hasCheck = false;*/
 	
-	var lastRowClicked;
+	//var lastRowClicked;
 	tableView.addEventListener('click', function(e){
 	    var row = e.row;
 	    row.hasCheck = !row.hasCheck;
+	    checked[row.uid] = row.hasCheck;
 	    if(row.hasCheck)
 	    	row.color = "black";
 	    else
@@ -101,14 +83,16 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	function submitGame(){
 		Ti.API.info("Pressed button: Invite.");
 		$.submit.backgroundColor = "#7C9A5B";
-		var checked = [];
-		for (var row in tableView.data) {
-			if (tableView.data[row].hasCheck) {
-				checked.push(tableView.data[row].uid);
+		var checked_list = [];
+		
+		for (var key in checked) {
+			if (checked[key]) {
+				checked_list.push(key);
 			}
 		}
-		Ti.App.fireEvent('app:createGame', {friends: checked});
-		$.create.close();
+		
+		Ti.App.fireEvent('app:createGame', {friends: checked_list});
+		$.win.close();
 	};
 	$.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
 	$.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
@@ -118,6 +102,6 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 	
 	
 	// Now that it's set up, focus on the search bar.
+	// I don't think that it should auto focus for the demo because we don't have that many friends.
 	searchBar.focus();
-
 });

@@ -1,12 +1,15 @@
 <Alloy>
-	<Window class="container">
+	<Window id="win" class="container">
 		<View class="header">
 			<View class="headerContent">
+				<View class="addView">
+					<ImageView image="../../new@2x.png" id="backButton">Cancel</ImageView>
+				</View>
 				<Label class="white" id="title">New Game</Label>
 			</View>
 		</View>
 		<View id="main" class="create">
-			<WebView id="webviewproxy"></WebView>
+			<!-- <WebView id="webviewproxy"></WebView> -->
 			<!--<TextField class="friends" id="friends" hintText="Enter csv uids of friends" />-->
 			<!--<TableView id="table">
 				<SearchBar id="friends" class="friends" showCancel="false" hintText="Enter csv uids of friends" />
