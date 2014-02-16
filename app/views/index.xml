@@ -15,6 +15,10 @@
 		</View>
 		<View id="main" class="content">
 			<WebView id="webviewproxy"></WebView>
+			<View class="emptystate">
+				<Label class="emptystateLabel">get started with Trump</Label>
+				<Label class="emptystateLabelLight">it's like Snapchat if Snapchat was on Facebook!</Label>
+			</View>
 		 	<!-- <ListView>
 				<ListSection id="gamesList">
 					<ListItem title="Test item"></ListItem>
