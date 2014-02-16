@@ -7,6 +7,8 @@
 //});
 
 //var win = $.index;
+Ti.App.game.adjective = "BORING";
+Ti.App.game.judge = "Derek";
 
 
 Alloy.createController('play');
@@ -264,8 +266,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
 	
 	$.main.add(listView);
-	//Alloy.createController('play').getView().open();
-	Ti.App.fireEvent('app:play', {game: games[0]});
+	//Ti.App.fireEvent('app:play', {game: games[0]});
 	
 });
 
@@ -274,8 +275,8 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	// http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.ListItem
 	function playMatch(e) {
 		Ti.API.info("playMatch() triggered.");
-    	var item = gamesList.getItemAt(e.itemIndex);
-    	Ti.App.fireEvent('app:play', {game: e});
+    	Ti.App.game = gamesList.getItemAt(e.itemIndex);
+    	Alloy.createController('play').getView().open();
 	}
 
 Ti.App.addEventListener('app:webviewproxyDidLoad', function (e) {
