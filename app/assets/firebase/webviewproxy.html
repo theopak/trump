@@ -47,14 +47,12 @@
                                 d = {name:user.displayName ,id:user.id, total_score:0};
                                 firebase.child('users').child(user.id).set(d); 
                                 Ti.App.addEventListener("app:gotFacebookFriends",function(e){
-                                    var friends_dict = {};
                                     for(var i = 0; i < e.friend_ids.length; i++){
                                         var my_friend = new Firebase("https://trump.firebaseio.com/users/"+e.friend_ids[i]+"/");
                                         my_friend.once("value",function(friend_data){
                                             if(friend_data.val() != null){
-                                                friends_dict[friend_data.val().id] = friend_data.val().id;
-                                                firebase.child('users').child(user.id).friends.push(friend_data.val().id);
-                                                firebase.child('users').child(friend_data.val().id).friends.push(user.id);
+                                                firebase.child('users').child(user.id).child("friends").push(friend_data.val().id);
+                                                firebase.child('users').child(friend_data.val().id).child("friends").push(user.id);
                                             }
                                         });
                                     }
