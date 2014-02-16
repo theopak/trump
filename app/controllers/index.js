@@ -289,7 +289,7 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
 	}
     for (var key in games)
     {
-	    gameDataSet.push({ topic: {text: games[key].adjective.adjective}, friends: {text: games[key].participants_text}, pic: {image: 'apple.jpg'}, properties: {height: 80}});
+	    gameDataSet.push({ topic: {text: games[key].adjective.adjective}, friends: {text: games[key].participants_text}, pic: {image: "http://graph.facebook.com/"+games[key].judge+"/picture?width=100&height=100"}, properties: {height: 80}});
     }
     
     gamesList.setItems(gameDataSet);
