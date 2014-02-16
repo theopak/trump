@@ -31,32 +31,79 @@
                         });
                         var firebase_users = new Firebase("https://trump.firebaseio.com/users");
                         firebase_users.once("value",function(children){
-                            alert("HELLO");
                             children_arr = children.val();
                             var child_exists = false;
                             for(var key in children_arr)
                             {
                                 if(key == user.id){
                                     child_exists = true;
+                                    Ti.API.info("OH NO SOMEONE ALREADY EXISTS");
                                 }
                             }
                             if(!child_exists)
                             {
-                                // new profile creation
+                                //new profile creation
                                 var d = {};
                                 d = {name:user.displayName ,id:user.id, total_score:0};
-                                firebase.child('users').child(user.id).set(d);       
-                            }
+                                firebase.child('users').child(user.id).set(d); 
+                                Ti.App.addEventListener("app:gotFacebookFriends",function(e){
+                                    for(var i = 0; i < e.friend_ids.length; i++){
+                                        var my_friend = new Firebase("https://trump.firebaseio.com/users/"+e.friend_ids[i]+"/");
+                                        my_friend.once("value",function(friend_data){
+                                            if(friend_data.val() != null){
+                                                firebase.child('users').child(user.id).child("friends").push(friend_data.val().id);
+                                                firebase.child('users').child(friend_data.val().id).child("friends").push(user.id);
+                                            }
+                                        });
+                                    }
+                                });
+                                Ti.App.fireEvent("app:getFacebookFriends");
+                            }                                                                        
                         });
                         Ti.App.addEventListener("app:requestFriendList",function(e){
-                            alert("HELLO2");
                             var my_friends = new Firebase("https://trump.firebaseio.com/users/"+user.id+"/friends/");
                             my_friends.once("value",function(friend_data){
+                                if(friend_data.val() == null){
+                                    Ti.App.fireEvent("app:friendListAcquired",{friends:[]});
+                                }
                                 convert_participant_ids_to_players(friend_data.val(),function(friends){
-                                    alert(friends);
                                     Ti.App.fireEvent("app:friendListAcquired",{friends:friends});
                                 });
                             });
+                        });
+                        Ti.App.addEventListener('app:createGame', function (event) {
+                            try{
+                                var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
+                                adjective_list.on('value', function (adjectives) {
+                                    adjectives = adjectives.val();
+                                    adjective_id = randInt(0, adjectives.length);
+                                    selection = adjectives[adjective_id];
+                                    Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
+                                    
+                                    var games = new Firebase('https://trump.firebaseio.com/games/');
+                                    Ti.API.info(event.friends);
+                                    
+                                    var newPushRef = games.push();
+                                    newPushRef.set({
+                                        adjective: adjective_id,
+                                        participants: event.friends
+                                    });
+                                    Ti.API.info("NEW PUSH REF IS "+newPushRef);
+                                    var pushedName = newPushRef.name();
+                                    Ti.API.info("PUSHED NAME IS "+pushedName);
+                                    var friends = event.friends;
+                                    
+                                    for (var i = 0; i < friends.length; i++)
+                                    {
+                                        friend_games = new Firebase('https://trump.firebaseio.com/users/'+friends[i]+'/games/');
+                                        friend_games.push(pushedName);
+                                    }
+                                    // add myself to the game :)
+                                    friend_games = new Firebase('https://trump.firebaseio.com/users/'+user.id+'/games/');
+                                    friend_games.push(pushedName);
+                                    
+                            });
+                            }catch(exception){alert(exception);}  
                         });                        
                         
                     } else {
@@ -132,37 +179,6 @@
                         callback(real_adjective_data.val());
                 });
             }            
-            
-            Ti.App.addEventListener('app:createGame', function (event) {
-                try{
-    				var adjective_list = new Firebase('https://trump.firebaseio.com/adjectives/');
-    				adjective_list.on('value', function (adjectives) {
-    					adjectives = adjectives.val();
-    					adjective_id = randInt(0, adjectives.length);
-    					selection = adjectives[adjective_id];
-    					Ti.API.info(selection['adjective'] + ': ' + selection['synonyms'].join(', '));
-    					
-    					var games = new Firebase('https://trump.firebaseio.com/games/');
-    					Ti.API.info(event.friends);
-    					
-    					var newPushRef = games.push();
-    					newPushRef.set({
-    						adjective: adjective_id,
-    						participants: event.friends
-    					});
-    					Ti.API.info("NEW PUSH REF IS "+newPushRef);
-    					var pushedName = newPushRef.name();
-    					Ti.API.info("PUSHED NAME IS "+pushedName);
-    					var friends = event.friends;
-    					
-    					for (var i = 0; i < friends.length; i++)
-    					{
-    						friend_games = new Firebase('https://trump.firebaseio.com/users/'+friends[i]+'/games/');
-    						friend_games.push(pushedName);
-    					}
-				});
-				}catch(exception){alert(exception);}  
-            });
             
             		
             /* FIRE EVENTS */
