@@ -141,7 +141,7 @@
                                 game.child("state").set("judged");
                             }catch(e){alert(e);}
                         });
-                        Ti.App.addEventListener('app:viewSubmissions',function(e){
+                        Ti.App.addEventListener('app:requestSubmissions',function(e){
                             try{
                                 var game_id = e.game;
                                 var game = new Firebase("https://trump.firebaseio.com/games/"+game_id+"/");
@@ -164,6 +164,7 @@
                                                     }
                                                 }
                                                 final_data.push({id:players[i].id,name:players[i].name,url:url});
+                                                Ti.App.fireEvent("app:submissionsAcquired",final_data);
                                             }        
                                         });
                                     });  
