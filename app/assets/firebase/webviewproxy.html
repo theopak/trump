@@ -88,10 +88,13 @@
                                     var games = new Firebase('https://trump.firebaseio.com/games/');
                                     Ti.API.info(event.friends);
                                     event.friends.push(user.id);
+                                    var judge_id = randInt(0,event.friends.length);
+                                    var judge = event.friends[judge_id];
                                     var newPushRef = games.push();
                                     newPushRef.set({
                                         adjective: adjective_id,
-                                        participants: event.friends
+                                        participants: event.friends,
+                                        judge: judge
                                     });
                                     Ti.API.info("NEW PUSH REF IS "+newPushRef);
                                     var pushedName = newPushRef.name();
