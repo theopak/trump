@@ -94,6 +94,7 @@ Ti.App.addEventListener('app:friendListAcquired', function (message) {
 		Ti.App.fireEvent('app:createGame', {friends: checked_list});
 		$.win.close();
 	};
+	$.backButton.addEventListener("touchend",function(e){$.win.close();});
 	$.submit.addEventListener("touchstart",  function(e){$.submit.backgroundColor = "#9CC075";});
 	$.submit.addEventListener("touchcancel", function(e){$.submit.backgroundColor = "#7C9A5B";});
 	$.submit.addEventListener("touchend",    function(e){submitGame();});
