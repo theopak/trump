@@ -114,6 +114,7 @@
                                                 var all_data = {};
                                                 all_data["adjective"] = adjective_data.val().adjective;
                                                 all_data["judge"] = {id:judge_data.val().id,name:judge_data.val().name};
+                                                all_data["winner_chosen"] = game_data.val().state == "judged";
                                                 var num_submissions = 0;
                                                 if(submissions.val() != null){
                                                     num_submissions = Object.keys(submissions.val()).length;
@@ -125,7 +126,7 @@
                                                         all_data["has_submitted"] = true;
                                                     }
                                                 }
-                                                Ti.App.fireEvent("app:gameInfoAcquired",all_data);    
+                                                Ti.App.fireEvent("app:gameInfoAcquired", all_data);    
                                             });    
                                         });
                                     });
