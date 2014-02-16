@@ -8,7 +8,7 @@
 
 //var win = $.index;
 
-
+Alloy.createController('submit').getView().open();
 
 
 var emptyStateView = Ti.UI.createView({
