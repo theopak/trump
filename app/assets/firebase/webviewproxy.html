@@ -64,11 +64,9 @@
                             var my_friends = new Firebase("https://trump.firebaseio.com/users/"+user.id+"/friends/");
                             my_friends.once("value",function(friend_data){
                                 if(friend_data.val() == null){
-                                    alert("YOU SHOULD FIND SOME FRIENDS");
                                     Ti.App.fireEvent("app:friendListAcquired",{friends:[]});
                                 }
                                 convert_participant_ids_to_players(friend_data.val(),function(friends){
-                                    alert(friends);
                                     Ti.App.fireEvent("app:friendListAcquired",{friends:friends});
                                 });
                             });
