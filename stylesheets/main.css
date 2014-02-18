@@ -66,3 +66,17 @@ h2.subtitle {
   color: #d56d79;
   background: #fff;
 }
+p {
+  min-width: 240px;
+  max-width: 600px;
+  width: 40%;
+}
+p a {
+  transition: all 0.1s ease-in-out;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+p:hover a {
+  text-decoration: underline;
+}
