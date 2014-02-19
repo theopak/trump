@@ -77,6 +77,6 @@ p a {
   font-weight: bold;
   text-decoration: none;
 }
-p:hover a {
+p a:hover {
   text-decoration: underline;
 }
