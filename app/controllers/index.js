@@ -123,17 +123,11 @@ Ti.App.addEventListener('app:webviewproxyDidLoad',function(){
     {
         if(e.success){
             // our access token is still valid.  Phew...
+            Ti.App.fireEvent("app:fbAuthed", {access_token: fb.accessToken});
         }else{
             // we need to re-authorize.  Darn
             fb.logout();
             fb.authorize();
-        }
-        if (!fb.loggedIn) {
-            fb.authorize();
-        }
-        else
-        {
-            Ti.App.fireEvent("app:fbAuthed", {access_token: fb.accessToken});
         }
 
     });
@@ -292,18 +286,13 @@ Ti.App.addEventListener('app:gameListChanged', function(e) {
     	var item = gamesList.getItemAt(e.itemIndex);
 
     	// //Ti.App.fireEvent('app:play', {game: e.source.game_id});
-    	// //Alloy.createController('play', {game: e.source.game_id}).getView().open();
-    	// var demoGame = [];
-    	// demoGame.adjective = "Demonstable";
-    	// demoGame.judge = {name: "Derek", id: 0};
-    	// Alloy.createController('play', {game: demoGame}).getView().open();
-
-    	Ti.API.info("KEYS ARE"+Object.keys(item));
+    	var game_id;
     	if(OS_ANDROID){
-    	    Ti.App.fireEvent('app:play', {game: item.pic.game_id});
-    	}else{
-            Ti.App.fireEvent('app:play', {game: e.source.game_id});    	    
-    	}
+            game_id = item.pic.game_id;
+        }else{
+            game_id = e.source.game_id;         
+        }
+    	Alloy.createController('play', {game: game_id}).getView().open();
 
 	}
 
