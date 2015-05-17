@@ -1,4 +1,6 @@
 [Trump](http://trumpyourfriends.com)
 ===================================
 
-Trump your friends! (it's like snapchat if snapchat was on facebook)
+Trump is a social game made natively for iOS. Trump won at PennApps, a Division 1 Hackathon, placing in the top ten projects out of several hundred.
+
+http://tjphilli.com/projects/trump
